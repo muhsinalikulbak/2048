@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 12:13:04 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/12 12:39:23 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/12 18:50:43 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
-enum e_COLORS
-{
-	PAIR_DEFAULT = 1,
-};
+#define ESC 27
 
 typedef struct s_data
 {
