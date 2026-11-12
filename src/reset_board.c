@@ -1,0 +1,46 @@
+#include "reset_board.h"
+
+static void	reset_game_board(int **board)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < GAME_BOARD_SIZE)
+	{
+		j = 0;
+		while (j < GAME_BOARD_SIZE)
+		{
+			board[i][j] = 0;
+			j++;
+		}
+		i++;
+	}
+}
+
+static void	reset_draw_board()
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < DRAWING_BOARD_SIZE)
+	{
+		j = 0;
+		while (j < DRAWING_BOARD_SIZE)
+		{
+			if (i % 6 == 0 || j % 6 == 0)
+				mvaddch(START_Y + i, START_X + j, ' ' | COLOR_PAIR(1));
+			else
+				mvaddch(START_Y + i, START_X + j, ' ' | COLOR_PAIR(3));
+			j++;
+		}
+		i++;
+	}
+}
+
+void reset_board(t_data *d)
+{
+	reset_game_board(d->game_board);
+	reset_draw_board(d->drawing_board);
+}

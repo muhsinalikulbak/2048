@@ -6,13 +6,15 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/12 19:02:30 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/13 01:25:51 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "game_loop.h"
 #include "libft.h"
+#include "create_boards.h"
+#include "reset_board.h"
 
 // initscr : screen'i başlatır
 // curs_set : imleci gizler, 1 = silik, 2 = tam gösterir
@@ -47,33 +49,11 @@ static bool	init_colors(void)
 	init_pair(32, COLOR_BLUE,   COLOR_BLACK);
 	init_pair(64, COLOR_MAGENTA,COLOR_BLACK);
 	init_pair(128, COLOR_RED,    COLOR_BLACK);
-	return (true);
-}
 
-static bool	create_rows(char **board, int board_size)
-{
-	int	i;
+	init_pair(1, COLOR_BLACK, COLOR_BLUE);
+	init_pair(3, COLOR_BLACK, COLOR_BLACK);
+	init_pair(5, 198, -1);
 
-	i = 0;
-	while (board[i])
-	{
-		board[i] = ft_calloc(board_size + 1, sizeof(char));
-		if (!board[i])
-		{
-			i--;
-			while (i >= 0)
-			{
-				if (board[i])
-					free(board[i]);
-				i--;
-			}
-			free(board);
-			board = NULL;
-			return (false);
-		}
-		board[i][board_size] = '\0';
-		i++;
-	}
 	return (true);
 }
 
@@ -96,33 +76,28 @@ static void	print_movable(char	*str, int row)
 	}
 }
 
-static int	menu()
+static int	print_menu()
 {
 	int		i;
 	int		key;
-	// char	*game_name;
 	char	*quit;
-	char	*start_five;
-	char	*start_four;
+	char	*start;
 
 	i = 0;
 	key = 0;
-	// game_name = "-2048-";
-	start_four = "1: Start with 4x4";
-	start_five = "2: Start with 5x5";
-	quit = "3: Quit          ";
+	start = "1: Start";
+	quit = "2: Quit";
 
 	erase();
-	bkgd(COLOR_PAIR(1));
+	attron(COLOR_PAIR(5));
 	print_movable("Welcome 2048", i++);
-	
-	// mvprintw(i++, (COLS - ft_strlen(game_name)) / 2, "%s", game_name);
-	mvprintw(i++, (COLS - ft_strlen(start_four)) / 2, "%s", start_four);
-	mvprintw(i++, (COLS - ft_strlen(start_five)) / 2, "%s", start_five);
+	mvprintw(i++, (COLS - ft_strlen(start)) / 2, "%s", start);
 	mvprintw(i++, (COLS - ft_strlen(quit)) / 2, "%s", quit);
+	attroff(COLOR_PAIR(5));
+
 	refresh();
 
-	while (key != '1' && key != '2' && key != '3')
+	while (key != '1' && key != '2')
 		key = getch();
 	return key;
 }
@@ -137,65 +112,61 @@ static bool is_valid_key(int key)
 	return (false);
 }
 
+
 int	main(void)
 {
 	t_data	d;
 	int		key;
-
-	init_screen();
-	d.support_color = init_colors();
-	d.board_size = 5;
-	d.drawing_board = ft_calloc(sizeof(char *), d.board_size + 1);
-	if (!d.drawing_board)
-		return (1);
-	d.drawing_board[d.board_size] = NULL;
-	create_rows(d.drawing_board, d.board_size);
 	
-
+	init_screen();
+	if (!init_colors())
+	{
+		endwin();
+		ft_putendl_fd("Color is unsupported", 2);
+		return (1);
+	}
+	if (START_X < 0 || START_Y < 0)
+	{
+		ft_putendl_fd("Terminal scale is unsupported", 2);
+		return (1);
+	}
 	while (true)
 	{
-		key = menu();
-		if (key == '1')
+		key = print_menu();
+		if (key == '2')
+			break;
+		erase();
+		if (!create_boards(&d))
 		{
-			// game_board ve draw_board'ı oluştur.
-			// game_board'a random iki yere 2 koy.
+			ft_putendl_fd("Calloc error", 2);
+			return (1);
+		}
+		reset_board(&d);
+		// İki adet random sayı üret
+		// Sayıları buffer'a koy (çiz)
+		// Sol üst köşeye -->
+		// R = Restart a game
+		// ESC = menu
 
-			while (true)
-			{
-				erase();
-				// çizimi yap
-
-				refresh();
+		while (true)
+		{
+			refresh();
+			// Oyun devam edilebilir mi kontrol et ona göre çık
+			key = getch();
+			while (!is_valid_key(key))
 				key = getch();
-				while (!is_valid_key(key))
-					key = getch();
-				
-				if (key == 'R')
-				{
-					// game_board'u sıfırla
-				}
-				else if (key == ESC)
-				{
-					// İki board'u free et
-					break;
-				}
-				
-				// Ok yönlerine göre ilgili fonksiyona git ve game_board'u değiştir
+
+			if (key == 'R')
+				reset_board(&d);
+			else if (key == ESC)
+			{
+				// İki board'u free et
+				break;
 			}
 			
+			// Ok yönlerine göre ilgili fonksiyona git ve game_board'u değiştir
 		}
-		else if (key == '2')
-		{
-			// while (true)
-			// {
-			// 	/* code */
-			// }
-			
-		}
-		else
-			break;
 	}
-	
 	endwin();
 	return (0);
 }
