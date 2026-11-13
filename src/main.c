@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/13 19:17:53 by mkulbak          ###   ########.fr       */
+/*   Updated: 2026/11/14 01:24:58 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "game_loop.h"
 #include "libft.h"
-#include "create_board.h"
 #include "reset_board.h"
 
 // initscr : screen'i başlatır
@@ -85,8 +84,8 @@ static int	print_menu()
 
 	i = 0;
 	key = 0;
-	start = "1: Start";
-	quit = "2: Quit";
+	start = "SPACE: Start";
+	quit = "ESC: Quit";
 
 	erase();
 	attron(COLOR_PAIR(5));
@@ -97,7 +96,7 @@ static int	print_menu()
 
 	refresh();
 
-	while (key != '1' && key != '2')
+	while (key != ' ' && key != ESC)
 		key = getch();
 	return key;
 }
@@ -131,28 +130,17 @@ int	main(void)
 		endwin();
 		return (1);
 	}
-	while (true)
+	while (key != ESC)
 	{
 		key = print_menu();
-		if (key == '2')
+		if (key == ESC)
 			break;
 		erase();
-		if (!create_board(&d))
-		{
-			ft_putendl_fd("Calloc error", 2);
-			return (1);
-		}
 		reset_board(&d);
-		// İki adet random sayı üret
-		// Sayıları buffer'a koy (çiz)
-		// Sol üst köşeye -->
-		// R = Restart a game
-		// ESC = menu
 
 		while (true)
 		{
 			refresh();
-			// Oyun devam edilebilir mi kontrol et ona göre çık
 			key = getch();
 			while (!is_valid_key(key))
 				key = getch();
@@ -164,8 +152,16 @@ int	main(void)
 				// İki board'u free et
 				break;
 			}
+			else
+			{
+				// Burada game(key) fonksiyonuna gidilecek
+				// int res = game(key);
+				// res -1 ise oyun biter,
+				// res 0 ise bir şey değişmemiştir
+				// res 1 ise değişiklik var
+				// res 2 ise değişiklik var ve 2048'e ulaşıldı
+			}
 			
-			// Ok yönlerine göre ilgili fonksiyona git ve game_board'u değiştir
 		}
 	}
 	endwin();

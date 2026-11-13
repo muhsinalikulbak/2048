@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/11/12 11:44:00 by muhsin            #+#    #+#              #
-#    Updated: 2026/11/13 01:54:34 by muhsin           ###   ########.fr        #
+#    Updated: 2026/11/14 01:25:25 by muhsin           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -18,8 +18,8 @@ LDFLAGS			= -L./libft -lft -lncurses
 LIBFT			= ./libft/libft.a
 OBJ_DIR			= ./obj
 
-SRCS			= src/main.c src/create_board.c src/reset_board.c
-OBJS			= $(OBJ_DIR)/src/main.o $(OBJ_DIR)/src/create_board.o $(OBJ_DIR)/src/reset_board.o
+SRCS			= src/main.c  src/reset_board.c
+OBJS			= $(OBJ_DIR)/src/main.o $(OBJ_DIR)/src/reset_board.o
 
 all:			$(OBJ_DIR) $(LIBFT) $(NAME)
 

@@ -1,6 +1,6 @@
 #include "reset_board.h"
 
-static void	reset_game_board(int **board)
+static void	reset_game_board(int grid[4][4])
 {
 	int	i;
 	int	j;
@@ -11,7 +11,7 @@ static void	reset_game_board(int **board)
 		j = 0;
 		while (j < GAME_BOARD_SIZE)
 		{
-			board[i][j] = 0;
+			grid[i][j] = 0;
 			j++;
 		}
 		i++;
@@ -42,6 +42,6 @@ static void	reset_draw_board()
 
 void reset_board(t_data *d)
 {
-	reset_game_board(d->game_board);
+	reset_game_board(d->grid);
 	reset_draw_board();
 }

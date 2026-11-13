@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 12:13:04 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/13 20:15:12 by mkulbak          ###   ########.fr       */
+/*   Updated: 2026/11/14 01:22:59 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,24 @@
 # define GAME_BOARD_SIZE 4
 # define DRAW_ROW 25
 # define DRAW_COL 50
-# define START_Y (LINES - DRAWING_BOARD_SIZE) / 2
-# define START_X (COLS - DRAWING_BOARD_SIZE) / 2
+# define START_Y (LINES - DRAW_ROW) / 2
+# define START_X (COLS - DRAW_COL) / 2
+
+
+/// Bu terminal resize yapılırken nereyi çizdiğini
+// Kaybetmemesi için 
+typedef enum e_state
+{
+	STATE_MENU,
+	STATE_GAME
+}	t_state;
 
 typedef struct s_data
 {
-	int		board_size;
-	int		**game_board;
+	t_state	print_state;
+	int		score;
+	int		rows;
+	int		cols;
+	int		grid[4][4];
 }	t_data;
 #endif
