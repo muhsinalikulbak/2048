@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/14 01:24:58 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/14 01:41:04 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@
 // cbreak : Tuşlar enter beklenmeden okunur, normalde enter'a basılması gerekir.  
 // keypad : Yön ve fonksiyon tuşlarını aktif eder (esc, arrow keys vs)
 // set_escdelay : ESC tuşundaki 1 saniyelik bekleme gecikmesini 25 milisaniyeye indirir
+
+static void	update_size(t_data *d)
+{
+	getmaxyx(stdscr, d->rows, d->cols);
+	d->start_y = (d->rows - DRAW_ROW) / 2;
+	d->start_x = (d->cols - DRAW_COL) / 2;
+}
 
 static void	init_screen(void)
 {
@@ -118,13 +125,14 @@ int	main(void)
 	int		key;
 	
 	init_screen();
+	update_size(&d);
 	if (!init_colors())
 	{
 		endwin();
 		ft_putendl_fd("Color is unsupported", 2);
 		return (1);
 	}
-	if (START_X < 0 || START_Y < 0)
+	if (d.start_x < 0 || d.start_y < 0)
 	{
 		ft_putendl_fd("Terminal scale is unsupported", 2);
 		endwin();

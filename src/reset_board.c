@@ -18,7 +18,7 @@ static void	reset_game_board(int grid[4][4])
 	}
 }
 
-static void	reset_draw_board()
+static void	reset_draw_board(int start_y, int start_x)
 {
 	int	i;
 	int	j;
@@ -29,19 +29,18 @@ static void	reset_draw_board()
 		j = 0;
 		while (j < DRAW_COL)
 		{
-			if (i % 6 == 0 || j % 6 == 0)
-				mvaddch(START_Y + i, START_X + j, ' ' | COLOR_PAIR(1));
+			if (i % 6 == 0 || j % 12 == 0 || (j-1) % 12 == 0)
+				mvaddch(start_y + i, start_x + j, ' ' | COLOR_PAIR(1));
 			else
-				mvaddch(START_Y + i, START_X + j, ' ' | COLOR_PAIR(3));
+				mvaddch(start_y + i, start_x + j, ' ' | COLOR_PAIR(3));
 			j++;
 		}
 		i++;
 	}
-	// mvaddch(START_Y + 3, START_X + 3, '3' | COLOR_PAIR(2));
 }
 
 void reset_board(t_data *d)
 {
 	reset_game_board(d->grid);
-	reset_draw_board();
+	reset_draw_board(d->start_y, d->start_x);
 }

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 12:13:04 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/14 01:22:59 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/14 01:40:42 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
 # define GAME_BOARD_SIZE 4
 # define DRAW_ROW 25
 # define DRAW_COL 50
-# define START_Y (LINES - DRAW_ROW) / 2
-# define START_X (COLS - DRAW_COL) / 2
+
 
 
 /// Bu terminal resize yapılırken nereyi çizdiğini
@@ -30,7 +29,8 @@
 typedef enum e_state
 {
 	STATE_MENU,
-	STATE_GAME
+	STATE_GAME,
+	STATE_QUIT
 }	t_state;
 
 typedef struct s_data
@@ -39,6 +39,8 @@ typedef struct s_data
 	int		score;
 	int		rows;
 	int		cols;
+	int		start_y;
+	int		start_x;
 	int		grid[4][4];
 }	t_data;
 #endif
