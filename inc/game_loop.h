@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 12:13:04 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/13 01:52:06 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/13 20:15:12 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 
 # define ESC 27
 # define GAME_BOARD_SIZE 4
-# define DRAWING_BOARD_SIZE 25
+# define DRAW_ROW 25
+# define DRAW_COL 50
 # define START_Y (LINES - DRAWING_BOARD_SIZE) / 2
 # define START_X (COLS - DRAWING_BOARD_SIZE) / 2
 

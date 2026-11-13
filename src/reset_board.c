@@ -24,10 +24,10 @@ static void	reset_draw_board()
 	int	j;
 
 	i = 0;
-	while (i < DRAWING_BOARD_SIZE)
+	while (i < DRAW_ROW)
 	{
 		j = 0;
-		while (j < DRAWING_BOARD_SIZE)
+		while (j < DRAW_COL)
 		{
 			if (i % 6 == 0 || j % 6 == 0)
 				mvaddch(START_Y + i, START_X + j, ' ' | COLOR_PAIR(1));

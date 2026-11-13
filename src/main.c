@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/13 01:58:07 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/13 19:17:53 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int	print_menu()
 
 	erase();
 	attron(COLOR_PAIR(5));
-	print_movable("Welcome 2048", i++);
+	print_movable("Welcome 2048 Made it by Muhsin Ali Kulbak", i++);
 	mvprintw(i++, (COLS - ft_strlen(start)) / 2, "%s", start);
 	mvprintw(i++, (COLS - ft_strlen(quit)) / 2, "%s", quit);
 	attroff(COLOR_PAIR(5));
