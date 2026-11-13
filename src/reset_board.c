@@ -37,10 +37,11 @@ static void	reset_draw_board()
 		}
 		i++;
 	}
+	// mvaddch(START_Y + 3, START_X + 3, '3' | COLOR_PAIR(2));
 }
 
 void reset_board(t_data *d)
 {
 	reset_game_board(d->game_board);
-	reset_draw_board(d->drawing_board);
+	reset_draw_board();
 }

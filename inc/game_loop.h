@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 12:13:04 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/13 00:44:29 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/13 01:52:06 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 typedef struct s_data
 {
 	int		board_size;
-	char	**drawing_board;
 	int		**game_board;
 }	t_data;
 #endif

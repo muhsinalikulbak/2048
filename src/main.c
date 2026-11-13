@@ -6,14 +6,14 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/13 01:25:51 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/13 01:58:07 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "game_loop.h"
 #include "libft.h"
-#include "create_boards.h"
+#include "create_board.h"
 #include "reset_board.h"
 
 // initscr : screen'i başlatır
@@ -128,6 +128,7 @@ int	main(void)
 	if (START_X < 0 || START_Y < 0)
 	{
 		ft_putendl_fd("Terminal scale is unsupported", 2);
+		endwin();
 		return (1);
 	}
 	while (true)
@@ -136,7 +137,7 @@ int	main(void)
 		if (key == '2')
 			break;
 		erase();
-		if (!create_boards(&d))
+		if (!create_board(&d))
 		{
 			ft_putendl_fd("Calloc error", 2);
 			return (1);
