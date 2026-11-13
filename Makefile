@@ -13,13 +13,13 @@
 NAME			= wong-kar-wai
 CC				= cc
 RM				= rm -f
-CFLAGS			= -Wall -Wextra -Werror -I./inc -I./libft/libft
-LDFLAGS			= -L./libft/libft -lft -lncurses
-LIBFT			= ./libft/libft/libft.a
+CFLAGS			= -Wall -Wextra -Werror -I./inc -I./libft
+LDFLAGS			= -L./libft -lft -lncurses
+LIBFT			= ./libft/libft.a
 OBJ_DIR			= ./obj
 
 SRCS			= src/main.c src/create_board.c src/reset_board.c
-OBJS			= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+OBJS			= $(OBJ_DIR)/src/main.o $(OBJ_DIR)/src/create_board.o $(OBJ_DIR)/src/reset_board.o
 
 all:			$(OBJ_DIR) $(LIBFT) $(NAME)
 
@@ -29,21 +29,29 @@ $(OBJ_DIR):
 $(NAME):		$(OBJS)
 				$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
 
-$(OBJ_DIR)/%.o:	%.c
+$(OBJ_DIR)/src/main.o: src/main.c
+				@mkdir -p $(@D)
+				$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/src/create_board.o: src/create_board.c
+				@mkdir -p $(@D)
+				$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/src/reset_board.o: src/reset_board.c
 				@mkdir -p $(@D)
 				$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
-				$(MAKE) -C ./libft/libft
+				$(MAKE) -C ./libft
 
 clean:
 				$(RM) $(OBJS)
-				$(MAKE) -C ./libft/libft clean
+				$(MAKE) -C ./libft clean
 
 fclean:			clean
 				$(RM) $(NAME)
 				$(RM) -rf $(OBJ_DIR)
-				$(MAKE) -C ./libft/libft fclean
+				$(MAKE) -C ./libft fclean
 
 re:				fclean all
 
