@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/14 01:41:04 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/14 23:40:29 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,8 @@ int	main(void)
 				// res -1 ise oyun biter,
 				// res 0 ise bir şey değişmemiştir
 				// res 1 ise değişiklik var
-				// res 2 ise değişiklik var ve 2048'e ulaşıldı
+				// res 2 ise 2048'e ulaşıldığnı belirticek ve
+				// bir ekran açılacak, devam etmek istiyorsa SPACE, bitirmek istiyorsa ESC'ye basacak
 			}
 			
 		}
