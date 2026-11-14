@@ -105,10 +105,12 @@ int	print_menu(int start_x)
 
 	erase();
 	attron(COLOR_PAIR(5));
+	attron(A_BOLD);
 	print_movable(start_x, "Welcome 2048 Made it by Mtaheri & Mkulbak", i++);
 	mvprintw(i++, (start_x - ft_strlen(start)) / 2, "%s", start);
 	mvprintw(i++, (start_x - ft_strlen(quit)) / 2, "%s", quit);
 	attroff(COLOR_PAIR(5));
+	attroff(A_BOLD);
 	refresh();
 
 	while (key != ' ' && key != ESC)
