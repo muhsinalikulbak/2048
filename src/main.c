@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/14 23:53:50 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/15 02:32:34 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "game_loop.h"
 #include "libft.h"
 #include "reset_board.h"
-
+#include "print.h"
 // initscr : screen'i başlatır
 // curs_set : imleci gizler, 1 = silik, 2 = tam gösterir
 // noecho : Basılan tuşların ekrana basılmasını engeller
@@ -26,15 +26,15 @@
 
 static void	update_size(t_data *d)
 {
-	getmaxyx(stdscr, d->rows, d->cols);
-	d->start_y = (d->rows - DRAW_ROW) / 2;
-	d->start_x = (d->cols - DRAW_COL) / 2;
+	getmaxyx(stdscr, d->window_row, d->window_col);
+	d->start_y = (d->window_row - DRAW_ROW) / 2;
+	d->start_x = (d->window_col - DRAW_COL) / 2;
 }
 
 static void	init_screen(void)
 {
 	initscr();
-	curs_set(0);
+	curs_set(0); // terminal küçükken burada kod patlıyor neden anlamadım buraya bak
 	noecho();
 	nodelay(stdscr, TRUE);
 	cbreak();
@@ -56,56 +56,11 @@ static bool	init_colors(void)
 	init_pair(64, COLOR_MAGENTA,COLOR_BLACK);
 	init_pair(128, COLOR_RED,    COLOR_BLACK);
 
-	init_pair(1, COLOR_BLACK, COLOR_BLUE);
+	init_pair(1, COLOR_BLACK, COLOR_RED);
 	init_pair(3, COLOR_BLACK, COLOR_BLACK);
 	init_pair(5, 198, -1);
 
 	return (true);
-}
-
-static void	print_movable(char	*str, int row)
-{
-	int	i;
-	int len;
-	int	speed;
-
-	speed = 100;
-	len = ft_strlen(str);
-	i = 0;
-	while (i < len / 2)
-	{
-		mvaddch(row, (COLS - len) / 2 + i, str[i]);
-		mvaddch(row, (COLS - len) / 2 + len - i - 1, str[len - 1 - i]);
-		refresh();
-		i++;
-		napms(speed);
-	}
-}
-
-static int	print_menu()
-{
-	int		i;
-	int		key;
-	char	*quit;
-	char	*start;
-
-	i = 0;
-	key = 0;
-	start = "SPACE: Start";
-	quit = "ESC: Quit";
-
-	erase();
-	attron(COLOR_PAIR(5));
-	print_movable("Welcome 2048 Made it by Muhsin Ali Kulbak", i++);
-	mvprintw(i++, (COLS - ft_strlen(start)) / 2, "%s", start);
-	mvprintw(i++, (COLS - ft_strlen(quit)) / 2, "%s", quit);
-	attroff(COLOR_PAIR(5));
-
-	refresh();
-
-	while (key != ' ' && key != ESC)
-		key = getch();
-	return key;
 }
 
 static bool is_valid_key(int key)
@@ -134,41 +89,55 @@ int	main(void)
 	}
 	if (d.start_x < 0 || d.start_y < 0)
 	{
-		ft_putendl_fd("Terminal scale is unsupported", 2);
 		endwin();
+		ft_putendl_fd("Terminal scale is unsupported", 2);
 		return (1);
 	}
+
+	key = print_menu(d.window_col);
+	if (key == ESC)
+	{
+		endwin();
+		return 0;
+	}
+	erase();
+	reset_board(&d);
+	refresh();
+
+	d.board[0][0] = 2;
+	d.board[1][0] = 4;
+	d.board[2][0] = 8;
+	d.board[3][0] = 16;
+	d.board[0][3] = 32;
+	d.board[2][1] = 64;
+
 	while (key != ESC)
 	{
-		key = print_menu();
-		if (key == ESC)
-			break;
-		erase();
-		reset_board(&d);
-
-		while (true)
-		{
-			refresh();
+		key = getch();
+		while (!is_valid_key(key))
 			key = getch();
-			while (!is_valid_key(key))
-				key = getch();
 
-			if (key == 'R')
-				reset_board(&d);
-			else if (key == ESC)
-				break;
-			else
-			{
-				// Burada game(key) fonksiyonuna gidilecek
-				// int res = game(key);
-				// res -1 ise oyun biter,
-				// res 0 ise bir şey değişmemiştir
-				// res 1 ise değişiklik var
-				// res 2 ise 2048'e ulaşıldığnı belirticek ve
-				// bir ekran açılacak, devam etmek istiyorsa SPACE, bitirmek istiyorsa ESC'ye basacak
-			}
-			
-		}
+		// Sol üstte 
+		// ESC : EXIT 
+		// R : Restart a game,
+		// iki satırlık ek menü düşünmüştüm
+		if (key == 'R')  
+			reset_board(&d);
+		else if (key == ESC)
+			break;
+		else
+		{
+			// Burada game(key) fonksiyonuna gidilecek
+			// int res = game(key);
+			// res -1 ise oyun biter,
+			// res 0 ise bir şey değişmemiştir
+			// res 1 ise değişiklik var
+			// res 2 ise 2048'e ulaşıldığnı belirticek ve
+			// bir ekran açılacak, devam etmek istiyorsa SPACE, bitirmek istiyorsa ESC'ye basacak
+
+			print_updated_board(d.board, d.start_y, d.start_x);
+			refresh();
+		}		
 	}
 	endwin();
 	return (0);
