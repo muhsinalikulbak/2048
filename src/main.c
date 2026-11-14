@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/14 23:40:29 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/14 23:53:50 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,7 @@ int	main(void)
 			if (key == 'R')
 				reset_board(&d);
 			else if (key == ESC)
-			{
-				// İki board'u free et
 				break;
-			}
 			else
 			{
 				// Burada game(key) fonksiyonuna gidilecek
