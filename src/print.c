@@ -1,17 +1,6 @@
 #include "print.h"
 #include "libft.h"
-
-static void	reset_cell(int start_y, int start_x, int draw_y, int draw_x)
-{
-	int	i;
-
-	i = 0;
-	while (i < 10)
-	{
-		mvaddch(start_y + draw_y, start_x + draw_x + i, ' ' | COLOR_PAIR(3));
-		i++;
-	}
-}
+#include "reset_board.h"
 
 // str parse without call malloc
 static void	str_parse(char buffer[20], int num)

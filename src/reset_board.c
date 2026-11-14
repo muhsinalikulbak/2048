@@ -6,11 +6,23 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 01:51:34 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/15 01:52:06 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/15 02:44:37 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "reset_board.h"
+
+void	reset_cell(int start_y, int start_x, int draw_y, int draw_x)
+{
+	int	i;
+
+	i = 0;
+	while (i < 10)
+	{
+		mvaddch(start_y + draw_y, start_x + draw_x + i, ' ' | COLOR_PAIR(3));
+		i++;
+	}
+}
 
 static void	reset_game_board(int board[4][4])
 {
@@ -53,6 +65,8 @@ static void	reset_draw_board(int start_y, int start_x)
 
 void	reset_board(t_data *d)
 {
+	bkgd(COLOR_PAIR(3));
+	refresh();
 	reset_game_board(d->board);
 	reset_draw_board(d->start_y, d->start_x);
 }

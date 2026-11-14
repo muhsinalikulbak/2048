@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 01:54:06 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/15 01:54:31 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/15 02:38:27 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 # include <ncurses.h>
 
 void	reset_board(t_data *d);
+void	reset_cell(int start_y, int start_x, int draw_y, int draw_x);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/15 02:32:34 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/15 02:46:24 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int	main(void)
 
 			print_updated_board(d.board, d.start_y, d.start_x);
 			refresh();
+			d.board[2][1] = 2;
 		}		
 	}
 	endwin();
