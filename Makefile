@@ -10,7 +10,7 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME		= wong-kar-wai
+NAME		= 2048
 CC			= cc
 RM			= rm -f
 CFLAGS		= -Wall -Wextra -Werror -MMD -MP -I./inc -I./libft
