@@ -31,6 +31,8 @@ typedef enum e_state
 {
 	STATE_MENU,
 	STATE_GAME,
+	STATE_WIN,
+	STATE_OVER,
 	STATE_QUIT
 }	t_state;
 
@@ -47,6 +49,7 @@ typedef struct s_data
 	int		window_col;
 	int		start_y;
 	int		start_x;
+	bool	won;
 	int		board[4][4];
 }	t_data;
 

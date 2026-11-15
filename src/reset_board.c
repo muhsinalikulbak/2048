@@ -17,6 +17,8 @@ void	reset_board(t_data *d)
 	int	i;
 	int	j;
 
+	d->score = 0;
+	d->won = false;
 	i = 0;
 	while (i < GAME_BOARD_SIZE)
 	{

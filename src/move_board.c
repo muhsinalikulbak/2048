@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../inc/move_board.h"
+#include <time.h>
 
 static int	process_line(int line[4], t_data *d)
 {
@@ -210,6 +211,93 @@ int	has_win(t_data *d)
 		{
 			if (d->board[i][j] >= WIN_VALUE)
 				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+void	spawn_tile(t_data *d)
+{
+	int	empty[16];
+	int	count;
+	int	random_index;
+	int	random_value;
+	int	i;
+	int	j;
+
+	count = 0;
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			if (d->board[i][j] == 0)
+			{
+				empty[count] = i * 4 + j;
+				count++;
+			}
+			j++;
+		}
+		i++;
+	}
+	if (count == 0)
+		return ;
+	random_index = rand() % count;
+	random_value = (rand() % 10 < 9) ? 2 : 4;
+	i = empty[random_index] / 4;
+	j = empty[random_index] % 4;
+	d->board[i][j] = random_value;
+}
+
+int	move_board(t_data *d, int key)
+{
+	int	backup[4][4];
+	int	changed;
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			backup[i][j] = d->board[i][j];
+			j++;
+		}
+		i++;
+	}
+	if (key == KEY_UP)
+		changed = move_up(d);
+	else if (key == KEY_DOWN)
+		changed = move_down(d);
+	else if (key == KEY_LEFT)
+		changed = move_left(d);
+	else if (key == KEY_RIGHT)
+		changed = move_right(d);
+	else
+		return (0);
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			if (backup[i][j] != d->board[i][j])
+			{
+				spawn_tile(d);
+				if (!d->won && has_win(d))
+				{
+					d->won = true;
+					return (2);
+				}
+				if (!has_move(d))
+					return (-1);
+				return (1);
+			}
 			j++;
 		}
 		i++;
