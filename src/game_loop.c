@@ -65,6 +65,25 @@ static void	play(t_data *d)
 					key = draw_getch(d);
 					if (key == ' ')
 					{
+						if (!has_move(d))
+						{
+							draw_show(d, STATE_OVER);
+							while (true)
+							{
+								key = draw_getch(d);
+								if (key == ESC)
+									return ;
+								else if (key == 'R' || key == 'r' || key == ' ')
+								{
+									reset_board(d);
+									spawn_tile(d);
+									spawn_tile(d);
+									draw_show(d, STATE_GAME);
+									break ;
+								}
+							}
+							return ;
+						}
 						draw_show(d, STATE_GAME);
 						break ;
 					}
