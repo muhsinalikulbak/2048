@@ -69,8 +69,7 @@ static void	draw_tile(t_data *d, int i, int j)
 	k = 0;
 	while (buf[k])
 	{
-		draw_digit(d->start_y + i * CELL_H + 2, x + k * 3, buf[k] - '0',
-			COLOR_PAIR(tile_pair(d->board[i][j])) | A_BOLD);
+		draw_digit(d->start_y + i * CELL_H + 2, x + k * 3, buf[k] - '0', COLOR_PAIR(tile_pair(d->board[i][j])) | A_BOLD);
 		k++;
 	}
 }

@@ -52,7 +52,3 @@ int	draw_init(t_data *d)
 	return (0);
 }
 
-void	draw_end(void)
-{
-	endwin();
-}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaheri@student.42istanbul.com.tr          +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 16:26:55 by mtaheri           #+#    #+#             */
-/*   Updated: 2026/11/15 17:10:57 by mtaheri          ###   ########.fr       */
+/*   Updated: 2026/11/15 21:06:03 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "game_loop.h"
 
 int		draw_init(t_data *d);
-void	draw_end(void);
 void	draw_show(t_data *d, t_state state);
 void	draw_redraw(t_data *d);
 int		draw_getch(t_data *d);

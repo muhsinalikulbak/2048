@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaheri@student.42istanbul.com.tr          +#+  +:+       +#+        */
+/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 12:13:04 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/15 19:33:57 by mtaheri          ###   ########.fr       */
+/*   Updated: 2026/11/15 21:03:47 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ typedef enum e_state
 	STATE_GAME,
 	STATE_QUIT
 }	t_state;
+
+enum e_const
+{
+	WIN_VALUE = 2048
+};
 
 typedef struct s_data
 {
