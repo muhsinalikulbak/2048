@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_board.c                                        :+:      :+:    :+:   */
+/*   move_board.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaheri@student.42istanbul.com.tr          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 21:29:00 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/15 21:29:00 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/15 22:29:37 by mtaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,18 +180,27 @@ int	has_move(t_data *d)
 	return (0);
 }
 
+static int	win_target(void)
+{
+	if (WIN_VALUE > 0 && (WIN_VALUE & (WIN_VALUE - 1)) == 0)
+		return (WIN_VALUE);
+	return (2048);
+}
+
 int	has_win(t_data *d)
 {
+	int	target;
 	int	i;
 	int	j;
 
+	target = win_target();
 	i = 0;
 	while (i < 4)
 	{
 		j = 0;
 		while (j < 4)
 		{
-			if (d->board[i][j] >= WIN_VALUE)
+			if (d->board[i][j] >= target)
 				return (1);
 			j++;
 		}

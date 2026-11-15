@@ -36,13 +36,13 @@ static int	tile_pair(int value)
 
 static void	draw_digit(int y, int x, int digit, int attr)
 {
-	static const char	*font[10][3] = {
+	const char	*font[10][3] = {
 	{"┏━┓", "┃┃┃", "┗━┛"}, {"╺┓ ", " ┃ ", "╺┻╸"},
 	{"┏━┓", "┏━┛", "┗━╸"}, {"┏━┓", "╺━┫", "┗━┛"},
 	{"╻ ╻", "┗━┫", "  ╹"}, {"┏━╸", "┗━┓", "┗━┛"},
 	{"┏━┓", "┣━┓", "┗━┛"}, {"┏━┓", "  ┃", "  ╹"},
 	{"┏━┓", "┣━┫", "┗━┛"}, {"┏━┓", "┗━┫", "┗━┛"}};
-	int					row;
+	int			row;
 
 	attron(attr);
 	row = 0;
