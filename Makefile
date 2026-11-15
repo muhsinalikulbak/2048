@@ -18,8 +18,8 @@ LDFLAGS			= -L./libft -lft -lncurses
 LIBFT			= ./libft/libft.a
 OBJ_DIR			= ./obj
 
-SRCS			= src/main.c  src/reset_board.c src/draw.c
-OBJS			= $(OBJ_DIR)/src/main.o $(OBJ_DIR)/src/reset_board.o $(OBJ_DIR)/src/draw.o
+SRCS			= src/main.c  src/reset_board.c src/draw.c src/draw_init.c src/draw_screens.c
+OBJS			= $(OBJ_DIR)/src/main.o $(OBJ_DIR)/src/reset_board.o $(OBJ_DIR)/src/draw.o $(OBJ_DIR)/src/draw_init.o $(OBJ_DIR)/src/draw_screens.o
 
 all:			$(OBJ_DIR) $(LIBFT) $(NAME)
 
@@ -42,6 +42,14 @@ $(OBJ_DIR)/src/reset_board.o: src/reset_board.c
 				$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/src/draw.o: src/draw.c
+				@mkdir -p $(@D)
+				$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/src/draw_init.o: src/draw_init.c
+				@mkdir -p $(@D)
+				$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/src/draw_screens.o: src/draw_screens.c
 				@mkdir -p $(@D)
 				$(CC) $(CFLAGS) -c $< -o $@
 

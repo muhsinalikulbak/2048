@@ -6,58 +6,54 @@
 /*   By: mtaheri@student.42istanbul.com.tr          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 16:26:31 by mtaheri           #+#    #+#             */
-/*   Updated: 2026/11/15 16:52:38 by mtaheri          ###   ########.fr       */
+/*   Updated: 2026/11/15 17:13:40 by mtaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/draw.h"
-#include "../inc/game_loop.h"
+#include "../inc/draw_screens.h"
 
-static bool	init_colors(void)
-{
-	if (!has_colors())
-		return (false);
-	start_color();
-	use_default_colors();
-	init_pair(2, COLOR_WHITE,  COLOR_BLACK);
-	init_pair(4, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(8, COLOR_GREEN,  COLOR_BLACK);
-	init_pair(16, COLOR_CYAN,   COLOR_BLACK);
-	init_pair(32, COLOR_BLUE,   COLOR_BLACK);
-	init_pair(64, COLOR_MAGENTA,COLOR_BLACK);
-	init_pair(128, COLOR_RED,    COLOR_BLACK);
-
-	init_pair(1, COLOR_BLACK, COLOR_BLUE);
-	init_pair(3, COLOR_BLACK, COLOR_BLACK);
-	init_pair(5, 198, -1);
-
-	return (true);
-}
-
-static void	update_size(t_data *d)
+static void	render(t_data *d, bool animate)
 {
 	getmaxyx(stdscr, d->rows, d->cols);
 	d->start_y = (d->rows - DRAW_ROW) / 2;
 	d->start_x = (d->cols - DRAW_COL) / 2;
+	erase();
+	if (d->print_state == STATE_MENU)
+		draw_menu_screen(d, animate);
+	else if (d->print_state == STATE_GAME && draw_fits(d))
+		draw_board_screen(d);
+	else if (d->print_state == STATE_GAME)
+		draw_warning_screen(d);
+	refresh();
 }
 
-static void	init_screen(void)
+void	draw_show(t_data *d, t_state state)
 {
-	initscr();
-	curs_set(0);
-	noecho();
-	nodelay(stdscr, TRUE);
-	cbreak();
-	keypad(stdscr, TRUE);
-	set_escdelay(25);
+	d->print_state = state;
+	render(d, true);
 }
 
-
-int init_draw(t_data *d)
+void	draw_redraw(t_data *d)
 {
-    init_screen();
-    update_size(d);
-    if (!init_colors())
-        return 1;
-    return 0;
+	render(d, false);
+}
+
+int	draw_getch(t_data *d)
+{
+	int	key;
+
+	key = getch();
+	if (key == KEY_RESIZE)
+	{
+		clearok(stdscr, TRUE);
+		draw_redraw(d);
+		return (ERR);
+	}
+	return (key);
+}
+
+bool	draw_fits(t_data *d)
+{
+	return (d->start_y >= 0 && d->start_x >= 0);
 }

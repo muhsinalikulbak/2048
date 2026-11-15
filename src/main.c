@@ -6,122 +6,69 @@
 /*   By: mtaheri@student.42istanbul.com.tr          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/15 16:50:02 by mtaheri          ###   ########.fr       */
+/*   Updated: 2026/11/15 17:13:48 by mtaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../inc/game_loop.h"
 #include "../libft/libft.h"
 #include "../inc/reset_board.h"
 #include "../inc/draw.h"
 
-// initscr : screen'i başlatır
-// curs_set : imleci gizler, 1 = silik, 2 = tam gösterir
-// noecho : Basılan tuşların ekrana basılmasını engeller
-
-// nodelay : getch fonksiyonu normalde bloklar (veri bekler), bloklamadan veri alabilmeyi sağlar
-// cbreak : Tuşlar enter beklenmeden okunur, normalde enter'a basılması gerekir.  
-// keypad : Yön ve fonksiyon tuşlarını aktif eder (esc, arrow keys vs)
-// set_escdelay : ESC tuşundaki 1 saniyelik bekleme gecikmesini 25 milisaniyeye indirir
-
-static void	print_movable(char	*str, int row)
+static int	wait_menu(t_data *d)
 {
-	int	i;
-	int len;
-	int	speed;
+	int	key;
 
-	speed = 100;
-	len = ft_strlen(str);
-	i = 0;
-	while (i < len / 2)
-	{
-		mvaddch(row, (COLS - len) / 2 + i, str[i]);
-		mvaddch(row, (COLS - len) / 2 + len - i - 1, str[len - 1 - i]);
-		refresh();
-		i++;
-		napms(speed);
-	}
-}
-
-static int	print_menu()
-{
-	int		i;
-	int		key;
-	char	*quit;
-	char	*start;
-
-	i = 0;
-	key = 0;
-	start = "SPACE: Start";
-	quit = "ESC: Quit";
-
-	erase();
-	attron(COLOR_PAIR(5));
-	print_movable("Welcome 2048 Made it by Muhsin Ali Kulbak", i++);
-	mvprintw(i++, (COLS - ft_strlen(start)) / 2, "%s", start);
-	mvprintw(i++, (COLS - ft_strlen(quit)) / 2, "%s", quit);
-	attroff(COLOR_PAIR(5));
-
-	refresh();
-
+	draw_show(d, STATE_MENU);
+	key = draw_getch(d);
 	while (key != ' ' && key != ESC)
-		key = getch();
-	return key;
+		key = draw_getch(d);
+	return (key);
 }
 
-static bool is_valid_key(int key)
+static bool	is_valid_key(int key)
 {
 	if (key == KEY_UP || key == KEY_DOWN || key == KEY_LEFT || key == KEY_RIGHT)
 		return (true);
-	
 	if (key == ESC || key == 'R')
 		return (true);
 	return (false);
 }
 
-
 int	main(void)
 {
 	t_data	d;
 	int		key;
-	int		ret;
 
-	ret = init_draw(&d);
-	if (ret == 1)
+	if (draw_init(&d) == 1)
 	{
-		endwin();
 		ft_putendl_fd("Color is unsupported", 2);
-		return (1);
-	}
-	if (d.start_x < 0 || d.start_y < 0)
-	{
-		ft_putendl_fd("Terminal scale is unsupported", 2);
-		endwin();
 		return (1);
 	}
 	key = 0;
 	while (key != ESC)
 	{
-		key = print_menu();
+		key = wait_menu(&d);
 		if (key == ESC)
-			break;
-		erase();
+			break ;
 		reset_board(&d);
-
+		draw_show(&d, STATE_GAME);
 		while (true)
 		{
-			refresh();
-			key = getch();
+			key = draw_getch(&d);
 			while (!is_valid_key(key))
-				key = getch();
-
-			if (key == 'R')
-				reset_board(&d);
-			else if (key == ESC)
+				key = draw_getch(&d);
+			if (key == ESC)
 			{
 				// İki board'u free et
-				break;
+				break ;
+			}
+			else if (!draw_fits(&d))
+				continue ;
+			else if (key == 'R')
+			{
+				reset_board(&d);
+				draw_redraw(&d);
 			}
 			else
 			{
@@ -131,10 +78,10 @@ int	main(void)
 				// res 0 ise bir şey değişmemiştir
 				// res 1 ise değişiklik var
 				// res 2 ise değişiklik var ve 2048'e ulaşıldı
+				// değişiklik varsa: draw_redraw(&d);
 			}
-			
 		}
 	}
-	endwin();
+	draw_end();
 	return (0);
 }
