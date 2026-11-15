@@ -23,6 +23,7 @@ LIBFT		= ./libft/libft.a
 OBJ_DIR		= ./obj
 
 SRCS		= src/main.c \
+			  src/game_loop.c \
 			  src/reset_board.c \
 			  src/draw.c \
 			  src/draw_init.c \

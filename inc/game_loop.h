@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaheri@student.42istanbul.com.tr          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 12:13:04 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/15 01:53:28 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/15 19:33:57 by mtaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,7 @@ typedef struct s_data
 	int		start_x;
 	int		board[4][4];
 }	t_data;
+
+void	game_loop(t_data *d);
+
 #endif
