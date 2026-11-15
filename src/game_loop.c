@@ -9,6 +9,7 @@ static int	wait_menu(t_data *d)
 	int	key;
 
 	draw_show(d, STATE_MENU);
+	flushinp();
 	key = draw_getch(d);
 	while (key != ' ' && key != ESC)
 		key = draw_getch(d);
@@ -98,7 +99,6 @@ void	game_loop(t_data *d)
 	srand(time(NULL));
 	while (wait_menu(d) != ESC)
 	{
-		flushinp();
 		reset_board(d);
 		spawn_tile(d);
 		spawn_tile(d);
