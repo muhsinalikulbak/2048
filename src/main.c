@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaheri@student.42istanbul.com.tr          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/14 01:41:04 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/15 16:50:02 by mtaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "game_loop.h"
-#include "libft.h"
-#include "reset_board.h"
+#include "../inc/game_loop.h"
+#include "../libft/libft.h"
+#include "../inc/reset_board.h"
+#include "../inc/draw.h"
 
 // initscr : screen'i başlatır
 // curs_set : imleci gizler, 1 = silik, 2 = tam gösterir
@@ -23,45 +24,6 @@
 // cbreak : Tuşlar enter beklenmeden okunur, normalde enter'a basılması gerekir.  
 // keypad : Yön ve fonksiyon tuşlarını aktif eder (esc, arrow keys vs)
 // set_escdelay : ESC tuşundaki 1 saniyelik bekleme gecikmesini 25 milisaniyeye indirir
-
-static void	update_size(t_data *d)
-{
-	getmaxyx(stdscr, d->rows, d->cols);
-	d->start_y = (d->rows - DRAW_ROW) / 2;
-	d->start_x = (d->cols - DRAW_COL) / 2;
-}
-
-static void	init_screen(void)
-{
-	initscr();
-	curs_set(0);
-	noecho();
-	nodelay(stdscr, TRUE);
-	cbreak();
-	keypad(stdscr, TRUE);
-	set_escdelay(25);
-}
-
-static bool	init_colors(void)
-{
-	if (!has_colors())
-		return (false);
-	start_color();
-	use_default_colors();
-	init_pair(2, COLOR_WHITE,  COLOR_BLACK);
-	init_pair(4, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(8, COLOR_GREEN,  COLOR_BLACK);
-	init_pair(16, COLOR_CYAN,   COLOR_BLACK);
-	init_pair(32, COLOR_BLUE,   COLOR_BLACK);
-	init_pair(64, COLOR_MAGENTA,COLOR_BLACK);
-	init_pair(128, COLOR_RED,    COLOR_BLACK);
-
-	init_pair(1, COLOR_BLACK, COLOR_BLUE);
-	init_pair(3, COLOR_BLACK, COLOR_BLACK);
-	init_pair(5, 198, -1);
-
-	return (true);
-}
 
 static void	print_movable(char	*str, int row)
 {
@@ -123,10 +85,10 @@ int	main(void)
 {
 	t_data	d;
 	int		key;
-	
-	init_screen();
-	update_size(&d);
-	if (!init_colors())
+	int		ret;
+
+	ret = init_draw(&d);
+	if (ret == 1)
 	{
 		endwin();
 		ft_putendl_fd("Color is unsupported", 2);
@@ -138,6 +100,7 @@ int	main(void)
 		endwin();
 		return (1);
 	}
+	key = 0;
 	while (key != ESC)
 	{
 		key = print_menu();
