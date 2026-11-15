@@ -53,7 +53,23 @@ void	draw_board_screen(t_data *d)
 {
 	int	i;
 	int	j;
+	char	*score_str;
+	char	score_buf[12];
+	char	*score_label;
 
+	attron(COLOR_PAIR(PAIR_TEXT) | A_BOLD);
+	mvaddnstr(0, 0, "ESC: Exit", d->window_col);
+	mvaddnstr(1, 0, "R: Restart", d->window_col);
+	score_str = ft_itoa(d->score);
+	if (score_str)
+	{
+		score_label = "Score: ";
+		ft_strlcpy(score_buf, score_label, sizeof(score_buf));
+		ft_strlcat(score_buf, score_str, sizeof(score_buf));
+		free(score_str);
+		mvaddnstr(0, (d->window_col - ft_strlen(score_buf)) / 2, score_buf, d->window_col);
+	}
+	attroff(COLOR_PAIR(PAIR_TEXT) | A_BOLD);
 	i = 0;
 	while (i < DRAW_ROW)
 	{
