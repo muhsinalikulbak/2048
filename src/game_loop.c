@@ -25,6 +25,65 @@ static bool	is_valid_key(int key)
 	return (false);
 }
 
+static void	start_game(t_data *d)
+{
+	reset_board(d);
+	spawn_tile(d);
+	spawn_tile(d);
+	draw_show(d, STATE_GAME);
+}
+
+static bool	wait_over(t_data *d)
+{
+	int	key;
+
+	draw_show(d, STATE_OVER);
+	while (true)
+	{
+		key = draw_getch(d);
+		if (key == ESC)
+			return (true);
+		else if (key == 'R' || key == 'r' || key == ' ')
+		{
+			start_game(d);
+			return (false);
+		}
+	}
+}
+
+static bool	wait_win(t_data *d)
+{
+	int	key;
+
+	draw_show(d, STATE_WIN);
+	while (true)
+	{
+		key = draw_getch(d);
+		if (key == ' ')
+		{
+			if (!has_move(d))
+				return (wait_over(d));
+			draw_show(d, STATE_GAME);
+			return (false);
+		}
+		else if (key == ESC)
+			return (true);
+	}
+}
+
+static bool	handle_result(t_data *d, int res)
+{
+	if (res == 0)
+		return (false);
+	else if (res == 1)
+		draw_redraw(d);
+	else if (res == 2)
+		return (wait_win(d));
+	else if (res == -1)
+		return (wait_over(d));
+	return (false);
+}
+
 // Sol üstte
 // ESC : EXIT
 // R : Restart a game,
@@ -32,7 +91,6 @@ static bool	is_valid_key(int key)
 static void	play(t_data *d)
 {
 	int	key;
-	int	res;
 
 	while (true)
 	{
@@ -44,72 +102,9 @@ static void	play(t_data *d)
 		else if (!draw_fits(d))
 			continue ;
 		else if (key == 'R' || key == 'r')
-		{
-			reset_board(d);
-			spawn_tile(d);
-			spawn_tile(d);
-			draw_redraw(d);
-		}
-		else
-		{
-			res = move_board(d, key);
-			if (res == 0)
-				continue ;
-			else if (res == 1)
-				draw_redraw(d);
-			else if (res == 2)
-			{
-				draw_show(d, STATE_WIN);
-				while (true)
-				{
-					key = draw_getch(d);
-					if (key == ' ')
-					{
-						if (!has_move(d))
-						{
-							draw_show(d, STATE_OVER);
-							while (true)
-							{
-								key = draw_getch(d);
-								if (key == ESC)
-									return ;
-								else if (key == 'R' || key == 'r' || key == ' ')
-								{
-									reset_board(d);
-									spawn_tile(d);
-									spawn_tile(d);
-									draw_show(d, STATE_GAME);
-									break ;
-								}
-							}
-							return ;
-						}
-						draw_show(d, STATE_GAME);
-						break ;
-					}
-					else if (key == ESC)
-						return ;
-				}
-			}
-			else if (res == -1)
-			{
-				draw_show(d, STATE_OVER);
-				while (true)
-				{
-					key = draw_getch(d);
-					if (key == ESC)
-						return ;
-					else if (key == 'R' || key == 'r' || key == ' ')
-					{
-						reset_board(d);
-						spawn_tile(d);
-						spawn_tile(d);
-						draw_show(d, STATE_GAME);
-						break ;
-					}
-				}
-			}
-		}
+			start_game(d);
+		else if (handle_result(d, move_board(d, key)))
+			return ;
 	}
 }
 
@@ -118,9 +113,6 @@ void	game_loop(t_data *d)
 	srand(time(NULL));
 	if (wait_menu(d) == ESC)
 		return ;
-	reset_board(d);
-	spawn_tile(d);
-	spawn_tile(d);
-	draw_show(d, STATE_GAME);
+	start_game(d);
 	play(d);
 }
