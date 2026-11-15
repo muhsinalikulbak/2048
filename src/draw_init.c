@@ -1,4 +1,5 @@
 #include "../inc/draw.h"
+#include "../inc/draw_screens.h"
 
 static bool	init_colors(void)
 {
@@ -6,16 +7,16 @@ static bool	init_colors(void)
 		return (false);
 	start_color();
 	use_default_colors();
-	init_pair(2, COLOR_WHITE, COLOR_BLACK);
-	init_pair(4, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(8, COLOR_GREEN, COLOR_BLACK);
-	init_pair(16, COLOR_CYAN, COLOR_BLACK);
-	init_pair(32, COLOR_BLUE, COLOR_BLACK);
-	init_pair(64, COLOR_MAGENTA, COLOR_BLACK);
-	init_pair(128, COLOR_RED, COLOR_BLACK);
-	init_pair(1, COLOR_BLACK, COLOR_BLUE);
-	init_pair(3, COLOR_BLACK, COLOR_BLACK);
-	init_pair(5, 198, -1);
+	init_pair(TILE_PAIR + 0, COLOR_WHITE, COLOR_BLACK);
+	init_pair(TILE_PAIR + 1, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(TILE_PAIR + 2, COLOR_GREEN, COLOR_BLACK);
+	init_pair(TILE_PAIR + 3, COLOR_CYAN, COLOR_BLACK);
+	init_pair(TILE_PAIR + 4, COLOR_BLUE, COLOR_BLACK);
+	init_pair(TILE_PAIR + 5, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(TILE_PAIR + 6, COLOR_RED, COLOR_BLACK);
+	init_pair(PAIR_BORDER, COLOR_BLACK, COLOR_RED);
+	init_pair(PAIR_EMPTY, COLOR_BLACK, COLOR_BLACK);
+	init_pair(PAIR_TEXT, 198, -1);
 	return (true);
 }
 
@@ -46,6 +47,7 @@ int	draw_init(t_data *d)
 		endwin();
 		return (1);
 	}
+	bkgd(COLOR_PAIR(PAIR_EMPTY));
 	d->print_state = STATE_MENU;
 	return (0);
 }

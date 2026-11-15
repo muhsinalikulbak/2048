@@ -15,9 +15,9 @@
 
 static void	render(t_data *d, bool animate)
 {
-	getmaxyx(stdscr, d->rows, d->cols);
-	d->start_y = (d->rows - DRAW_ROW) / 2;
-	d->start_x = (d->cols - DRAW_COL) / 2;
+	getmaxyx(stdscr, d->window_row, d->window_col);
+	d->start_y = (d->window_row - DRAW_ROW) / 2;
+	d->start_x = (d->window_col - DRAW_COL) / 2;
 	erase();
 	if (d->print_state == STATE_MENU)
 		draw_menu_screen(d, animate);

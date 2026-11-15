@@ -5,12 +5,12 @@ static void	print_centered(t_data *d, int row, char *str)
 {
 	int	x;
 
-	if (row < 0 || row >= d->rows)
+	if (row < 0 || row >= d->window_row)
 		return ;
-	x = (d->cols - (int)ft_strlen(str)) / 2;
+	x = (d->window_col - (int)ft_strlen(str)) / 2;
 	if (x < 0)
 		x = 0;
-	mvaddnstr(row, x, str, d->cols - x);
+	mvaddnstr(row, x, str, d->window_col - x);
 }
 
 static void	print_movable(t_data *d, char *str, int row)
@@ -20,8 +20,8 @@ static void	print_movable(t_data *d, char *str, int row)
 	int	x;
 
 	len = ft_strlen(str);
-	x = (d->cols - len) / 2;
-	if (x < 0 || row >= d->rows)
+	x = (d->window_col - len) / 2;
+	if (x < 0 || row >= d->window_row)
 		return (print_centered(d, row, str));
 	i = 0;
 	while (i < (len + 1) / 2)
@@ -38,15 +38,15 @@ void	draw_menu_screen(t_data *d, bool animate)
 {
 	char	*title;
 
-	title = "Welcome 2048 Made it by Muhsin Ali Kulbak";
-	attron(COLOR_PAIR(5));
+	title = "Welcome 2048 Made it by Mtaheri & Mkulbak";
+	attron(COLOR_PAIR(PAIR_TEXT) | A_BOLD);
 	if (animate)
 		print_movable(d, title, 0);
 	else
 		print_centered(d, 0, title);
 	print_centered(d, 1, "SPACE: Start");
 	print_centered(d, 2, "ESC: Quit");
-	attroff(COLOR_PAIR(5));
+	attroff(COLOR_PAIR(PAIR_TEXT) | A_BOLD);
 }
 
 void	draw_board_screen(t_data *d)
@@ -61,24 +61,25 @@ void	draw_board_screen(t_data *d)
 		while (j < DRAW_COL)
 		{
 			if (i % 6 == 0 || j % 12 == 0 || (j - 1) % 12 == 0)
-				mvaddch(d->start_y + i, d->start_x + j, ' ' | COLOR_PAIR(1));
+				mvaddch(d->start_y + i, d->start_x + j, ' ' | COLOR_PAIR(PAIR_BORDER));
 			else
-				mvaddch(d->start_y + i, d->start_x + j, ' ' | COLOR_PAIR(3));
+				mvaddch(d->start_y + i, d->start_x + j, ' ' | COLOR_PAIR(PAIR_EMPTY));
 			j++;
 		}
 		i++;
 	}
+	draw_tiles(d);
 }
 
 void	draw_warning_screen(t_data *d)
 {
 	int	y;
 
-	y = d->rows / 2 - 1;
+	y = d->window_row / 2 - 1;
 	if (y < 0)
 		y = 0;
-	attron(COLOR_PAIR(5));
+	attron(COLOR_PAIR(PAIR_TEXT));
 	print_centered(d, y, "Terminal too small");
 	print_centered(d, y + 1, "Make the window bigger");
-	attroff(COLOR_PAIR(5));
+	attroff(COLOR_PAIR(PAIR_TEXT));
 }
