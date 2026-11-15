@@ -116,12 +116,11 @@ static void	play(t_data *d)
 void	game_loop(t_data *d)
 {
 	srand(time(NULL));
-	while (wait_menu(d) != ESC)
-	{
-		reset_board(d);
-		spawn_tile(d);
-		spawn_tile(d);
-		draw_show(d, STATE_GAME);
-		play(d);
-	}
+	if (wait_menu(d) == ESC)
+		return ;
+	reset_board(d);
+	spawn_tile(d);
+	spawn_tile(d);
+	draw_show(d, STATE_GAME);
+	play(d);
 }
