@@ -13,5 +13,7 @@ void	draw_menu_screen(t_data *d, bool animate);
 void	draw_board_screen(t_data *d);
 void	draw_warning_screen(t_data *d);
 void	draw_tiles(t_data *d);
+void	draw_win_overlay(t_data *d);
+void	draw_over_overlay(t_data *d);
 
 #endif

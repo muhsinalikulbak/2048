@@ -83,3 +83,37 @@ void	draw_warning_screen(t_data *d)
 	print_centered(d, y + 1, "Make the window bigger");
 	attroff(COLOR_PAIR(PAIR_TEXT));
 }
+
+void	draw_win_overlay(t_data *d)
+{
+	int	center_y;
+	int	center_x;
+	char	*msg1;
+	char	*msg2;
+
+	center_y = d->window_row / 2;
+	center_x = d->window_col / 2;
+	msg1 = "YOU WIN!";
+	msg2 = "SPACE: continue  ESC: quit";
+	attron(COLOR_PAIR(PAIR_TEXT) | A_BOLD);
+	mvaddstr(center_y - 1, center_x - ft_strlen(msg1) / 2, msg1);
+	mvaddstr(center_y + 1, center_x - ft_strlen(msg2) / 2, msg2);
+	attroff(COLOR_PAIR(PAIR_TEXT) | A_BOLD);
+}
+
+void	draw_over_overlay(t_data *d)
+{
+	int	center_y;
+	int	center_x;
+	char	*msg1;
+	char	*msg2;
+
+	center_y = d->window_row / 2;
+	center_x = d->window_col / 2;
+	msg1 = "GAME OVER";
+	msg2 = "R: restart  ESC: quit";
+	attron(COLOR_PAIR(PAIR_TEXT) | A_BOLD);
+	mvaddstr(center_y - 1, center_x - ft_strlen(msg1) / 2, msg1);
+	mvaddstr(center_y + 1, center_x - ft_strlen(msg2) / 2, msg2);
+	attroff(COLOR_PAIR(PAIR_TEXT) | A_BOLD);
+}

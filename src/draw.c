@@ -25,6 +25,16 @@ static void	render(t_data *d, bool animate)
 		draw_board_screen(d);
 	else if (d->print_state == STATE_GAME)
 		draw_warning_screen(d);
+	else if ((d->print_state == STATE_WIN || d->print_state == STATE_OVER) && draw_fits(d))
+	{
+		draw_board_screen(d);
+		if (d->print_state == STATE_WIN)
+			draw_win_overlay(d);
+		else
+			draw_over_overlay(d);
+	}
+	else if (d->print_state == STATE_WIN || d->print_state == STATE_OVER)
+		draw_warning_screen(d);
 	refresh();
 }
 

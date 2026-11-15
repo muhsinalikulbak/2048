@@ -13,7 +13,7 @@
 NAME		= 2048
 CC			= cc
 RM			= rm -f
-CFLAGS		= -Wall -Wextra -Werror -MMD -MP -I./inc -I./libft
+CFLAGS		= -MMD -MP -I./inc -I./libft
 LDFLAGS		= -L./libft -lft -lncurses
 
 ifeq ($(shell uname), Linux)

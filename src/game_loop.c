@@ -19,7 +19,7 @@ static bool	is_valid_key(int key)
 {
 	if (key == KEY_UP || key == KEY_DOWN || key == KEY_LEFT || key == KEY_RIGHT)
 		return (true);
-	if (key == ESC || key == 'R')
+	if (key == ESC || key == 'R' || key == 'r')
 		return (true);
 	return (false);
 }
@@ -42,7 +42,7 @@ static void	play(t_data *d)
 			break ;
 		else if (!draw_fits(d))
 			continue ;
-		else if (key == 'R')
+		else if (key == 'R' || key == 'r')
 		{
 			reset_board(d);
 			spawn_tile(d);
@@ -52,13 +52,42 @@ static void	play(t_data *d)
 		else
 		{
 			res = move_board(d, key);
-			if (res != 0)
+			if (res == 0)
+				continue ;
+			else if (res == 1)
 				draw_redraw(d);
-			if (res == -1)
-				break ;
-			if (res == 2)
+			else if (res == 2)
 			{
-				// Win screen logic here
+				draw_show(d, STATE_WIN);
+				while (true)
+				{
+					key = draw_getch(d);
+					if (key == ' ')
+					{
+						draw_show(d, STATE_GAME);
+						break ;
+					}
+					else if (key == ESC)
+						return ;
+				}
+			}
+			else if (res == -1)
+			{
+				draw_show(d, STATE_OVER);
+				while (true)
+				{
+					key = draw_getch(d);
+					if (key == ESC)
+						return ;
+					else if (key == 'R' || key == 'r' || key == ' ')
+					{
+						reset_board(d);
+						spawn_tile(d);
+						spawn_tile(d);
+						draw_show(d, STATE_GAME);
+						break ;
+					}
+				}
 			}
 		}
 	}
@@ -69,6 +98,7 @@ void	game_loop(t_data *d)
 	srand(time(NULL));
 	while (wait_menu(d) != ESC)
 	{
+		flushinp();
 		reset_board(d);
 		spawn_tile(d);
 		spawn_tile(d);
