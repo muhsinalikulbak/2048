@@ -25,7 +25,6 @@ static bool	init_colors(void)
 // curs_set : imleci gizler, 1 = silik, 2 = tam gösterir
 // noecho : Basılan tuşların ekrana basılmasını engeller
 
-// nodelay : getch fonksiyonu normalde bloklar (veri bekler), bloklamadan veri alabilmeyi sağlar
 // cbreak : Tuşlar enter beklenmeden okunur, normalde enter'a basılması gerekir.
 // keypad : Yön ve fonksiyon tuşlarını aktif eder (esc, arrow keys vs)
 // set_escdelay : ESC tuşundaki 1 saniyelik bekleme gecikmesini 25 milisaniyeye indirir
@@ -35,7 +34,6 @@ static void	init_screen(void)
 	initscr();
 	curs_set(0);
 	noecho();
-	nodelay(stdscr, TRUE);
 	cbreak();
 	keypad(stdscr, TRUE);
 	set_escdelay(25);
