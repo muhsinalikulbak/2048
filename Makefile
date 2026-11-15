@@ -15,6 +15,10 @@ CC			= cc
 RM			= rm -f
 CFLAGS		= -Wall -Wextra -Werror -MMD -MP -I./inc -I./libft
 LDFLAGS		= -L./libft -lft -lncurses
+
+ifeq ($(shell uname), Linux)
+LDFLAGS		= -L./libft -lft -lncursesw
+endif
 LIBFT		= ./libft/libft.a
 OBJ_DIR		= ./obj
 

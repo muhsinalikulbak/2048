@@ -60,7 +60,7 @@ void	draw_board_screen(t_data *d)
 		j = 0;
 		while (j < DRAW_COL)
 		{
-			if (i % 6 == 0 || j % 12 == 0 || (j - 1) % 12 == 0)
+			if (i % CELL_H == 0 || j % CELL_W == 0 || (j - 1) % CELL_W == 0)
 				mvaddch(d->start_y + i, d->start_x + j, ' ' | COLOR_PAIR(PAIR_BORDER));
 			else
 				mvaddch(d->start_y + i, d->start_x + j, ' ' | COLOR_PAIR(PAIR_EMPTY));

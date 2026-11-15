@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   reset_board.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaheri@student.42istanbul.com.tr          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 01:51:34 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/15 02:44:37 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/15 17:57:58 by mtaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reset_board.h"
-#include "reset_board.h"
+#include "../inc/reset_board.h"
 
 void	reset_board(t_data *d)
 {

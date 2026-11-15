@@ -1,3 +1,4 @@
+#include <locale.h>
 #include "../inc/draw.h"
 #include "../inc/draw_screens.h"
 
@@ -30,6 +31,7 @@ static bool	init_colors(void)
 // set_escdelay : ESC tuşundaki 1 saniyelik bekleme gecikmesini 25 milisaniyeye indirir
 static void	init_screen(void)
 {
+	setlocale(LC_ALL, "");
 	initscr();
 	curs_set(0);
 	noecho();

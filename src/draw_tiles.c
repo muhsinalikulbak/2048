@@ -1,4 +1,5 @@
 #include "../inc/draw_screens.h"
+#include "../libft/libft.h"
 
 static void	num_to_str(char buffer[20], int num)
 {
@@ -33,23 +34,43 @@ static int	tile_pair(int value)
 	return (TILE_PAIR + n % TILE_COLORS);
 }
 
+static void	draw_digit(int y, int x, int digit, int attr)
+{
+	static const char	*font[10][3] = {
+	{"┏━┓", "┃┃┃", "┗━┛"}, {"╺┓ ", " ┃ ", "╺┻╸"},
+	{"┏━┓", "┏━┛", "┗━╸"}, {"┏━┓", "╺━┫", "┗━┛"},
+	{"╻ ╻", "┗━┫", "  ╹"}, {"┏━╸", "┗━┓", "┗━┛"},
+	{"┏━┓", "┣━┓", "┗━┛"}, {"┏━┓", "  ┃", "  ╹"},
+	{"┏━┓", "┣━┫", "┗━┛"}, {"┏━┓", "┗━┫", "┗━┛"}};
+	int					row;
+
+	attron(attr);
+	row = 0;
+	while (row < 3)
+	{
+		mvaddstr(y + row, x, font[digit][row]);
+		row++;
+	}
+	attroff(attr);
+}
+
 static void	draw_tile(t_data *d, int i, int j)
 {
-	char	buffer[20];
-	int		k;
-	int		y;
+	char	buf[20];
+	int		len;
 	int		x;
+	int		k;
 
 	if (d->board[i][j] == 0)
 		return ;
-	num_to_str(buffer, d->board[i][j]);
-	y = d->start_y + i * 6 + 3;
-	x = d->start_x + j * 12 + 2;
+	num_to_str(buf, d->board[i][j]);
+	len = ft_strlen(buf);
+	x = d->start_x + j * CELL_W + 2 + (CELL_IN_W - len * 3) / 2;
 	k = 0;
-	while (buffer[k])
+	while (buf[k])
 	{
-		mvaddch(y, x + k, buffer[k] | COLOR_PAIR(tile_pair(d->board[i][j]))
-			| A_BOLD);
+		draw_digit(d->start_y + i * CELL_H + 2, x + k * 3, buf[k] - '0',
+			COLOR_PAIR(tile_pair(d->board[i][j])) | A_BOLD);
 		k++;
 	}
 }

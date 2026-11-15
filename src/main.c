@@ -43,6 +43,8 @@ static void	put_test_tiles(t_data *d)
 	d->board[3][0] = 16;
 	d->board[0][3] = 32;
 	d->board[2][1] = 64;
+	d->board[1][2] = 2048;
+	d->board[3][3] = 16384;
 }
 
 int	main(void)

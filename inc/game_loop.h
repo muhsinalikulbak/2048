@@ -19,8 +19,11 @@
 
 # define ESC 27
 # define GAME_BOARD_SIZE 4
+# define CELL_H 6
+# define CELL_W 17
+# define CELL_IN_W 15
 # define DRAW_ROW 25
-# define DRAW_COL 50
+# define DRAW_COL 70
 
 /// Bu terminal resize yapılırken nereyi çizdiğini
 // Kaybetmemesi için 
