@@ -13,12 +13,11 @@
 #include "../inc/move_board.h"
 #include <time.h>
 
-static int	process_line(int line[4], t_data *d)
+static void	compact(int line[4])
 {
 	int	temp[4];
 	int	i;
 	int	j;
-	int	changed;
 
 	i = 0;
 	j = 0;
@@ -37,141 +36,124 @@ static int	process_line(int line[4], t_data *d)
 		j++;
 	}
 	i = 0;
+	while (i < 4)
+	{
+		line[i] = temp[i];
+		i++;
+	}
+}
+
+static int	merge(int line[4], t_data *d)
+{
+	int	i;
+	int	changed;
+
+	i = 0;
 	changed = 0;
 	while (i < 3)
 	{
-		if (temp[i] != 0 && temp[i] == temp[i + 1])
+		if (line[i] != 0 && line[i] == line[i + 1])
 		{
-			temp[i] *= 2;
-			d->score += temp[i];
-			temp[i + 1] = 0;
+			line[i] *= 2;
+			d->score += line[i];
+			line[i + 1] = 0;
 			changed = 1;
 		}
 		i++;
 	}
+	return (changed);
+}
+
+static int	process_line(int line[4], t_data *d)
+{
+	int	orig[4];
+	int	i;
+
 	i = 0;
-	j = 0;
 	while (i < 4)
 	{
-		if (temp[i] != 0)
-		{
-			line[j] = temp[i];
-			j++;
-		}
+		orig[i] = line[i];
 		i++;
 	}
-	while (j < 4)
+	compact(line);
+	merge(line, d);
+	compact(line);
+	i = 0;
+	while (i < 4)
 	{
-		line[j] = 0;
-		j++;
+		if (line[i] != orig[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+static int	*cell(t_data *d, int i, int k, int vertical, int reversed)
+{
+	int	row;
+	int	col;
+
+	if (vertical)
+	{
+		row = reversed ? 3 - k : k;
+		col = i;
+	}
+	else
+	{
+		row = i;
+		col = reversed ? 3 - k : k;
+	}
+	return (&d->board[row][col]);
+}
+
+static int	apply_move(t_data *d, int vertical, int reversed)
+{
+	int	i;
+	int	k;
+	int	line[4];
+	int	changed;
+
+	i = 0;
+	changed = 0;
+	while (i < 4)
+	{
+		k = 0;
+		while (k < 4)
+		{
+			line[k] = *cell(d, i, k, vertical, reversed);
+			k++;
+		}
+		if (process_line(line, d))
+			changed = 1;
+		k = 0;
+		while (k < 4)
+		{
+			*cell(d, i, k, vertical, reversed) = line[k];
+			k++;
+		}
+		i++;
 	}
 	return (changed);
 }
 
 int	move_left(t_data *d)
 {
-	int	i;
-	int	changed;
-
-	i = 0;
-	changed = 0;
-	while (i < 4)
-	{
-		if (process_line(d->board[i], d))
-			changed = 1;
-		i++;
-	}
-	return (changed);
+	return (apply_move(d, 0, 0));
 }
 
 int	move_right(t_data *d)
 {
-	int	i;
-	int	j;
-	int	line[4];
-	int	changed;
-
-	i = 0;
-	changed = 0;
-	while (i < 4)
-	{
-		j = 0;
-		while (j < 4)
-		{
-			line[j] = d->board[i][3 - j];
-			j++;
-		}
-		if (process_line(line, d))
-			changed = 1;
-		j = 0;
-		while (j < 4)
-		{
-			d->board[i][3 - j] = line[j];
-			j++;
-		}
-		i++;
-	}
-	return (changed);
+	return (apply_move(d, 0, 1));
 }
 
 int	move_up(t_data *d)
 {
-	int	i;
-	int	j;
-	int	line[4];
-	int	changed;
-
-	j = 0;
-	changed = 0;
-	while (j < 4)
-	{
-		i = 0;
-		while (i < 4)
-		{
-			line[i] = d->board[i][j];
-			i++;
-		}
-		if (process_line(line, d))
-			changed = 1;
-		i = 0;
-		while (i < 4)
-		{
-			d->board[i][j] = line[i];
-			i++;
-		}
-		j++;
-	}
-	return (changed);
+	return (apply_move(d, 1, 0));
 }
 
 int	move_down(t_data *d)
 {
-	int	i;
-	int	j;
-	int	line[4];
-	int	changed;
-
-	j = 0;
-	changed = 0;
-	while (j < 4)
-	{
-		i = 0;
-		while (i < 4)
-		{
-			line[i] = d->board[3 - i][j];
-			i++;
-		}
-		if (process_line(line, d))
-			changed = 1;
-		i = 0;
-		while (i < 4)
-		{
-			d->board[3 - i][j] = line[i];
-			i++;
-		}
-		j++;
-	}
-	return (changed);
+	return (apply_move(d, 1, 1));
 }
 
 int	has_move(t_data *d)
