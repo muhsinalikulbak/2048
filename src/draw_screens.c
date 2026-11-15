@@ -53,8 +53,9 @@ void	draw_board_screen(t_data *d)
 {
 	int	i;
 	int	j;
+	int	x;
 	char	*score_str;
-	char	score_buf[12];
+	char	score_buf[32];
 	char	*score_label;
 
 	attron(COLOR_PAIR(PAIR_TEXT) | A_BOLD);
@@ -67,7 +68,10 @@ void	draw_board_screen(t_data *d)
 		ft_strlcpy(score_buf, score_label, sizeof(score_buf));
 		ft_strlcat(score_buf, score_str, sizeof(score_buf));
 		free(score_str);
-		mvaddnstr(0, (d->window_col - ft_strlen(score_buf)) / 2, score_buf, d->window_col);
+		x = (d->window_col - (int)ft_strlen(score_buf)) / 2;
+		if (x < 0)
+			x = 0;
+		mvaddnstr(0, x, score_buf, d->window_col - x);
 	}
 	attroff(COLOR_PAIR(PAIR_TEXT) | A_BOLD);
 	i = 0;

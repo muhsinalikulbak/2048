@@ -255,7 +255,6 @@ void	spawn_tile(t_data *d)
 int	move_board(t_data *d, int key)
 {
 	int	backup[4][4];
-	int	changed;
 	int	i;
 	int	j;
 
@@ -271,13 +270,13 @@ int	move_board(t_data *d, int key)
 		i++;
 	}
 	if (key == KEY_UP)
-		changed = move_up(d);
+		move_up(d);
 	else if (key == KEY_DOWN)
-		changed = move_down(d);
+		move_down(d);
 	else if (key == KEY_LEFT)
-		changed = move_left(d);
+		move_left(d);
 	else if (key == KEY_RIGHT)
-		changed = move_right(d);
+		move_right(d);
 	else
 		return (0);
 	i = 0;
