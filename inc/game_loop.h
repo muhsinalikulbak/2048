@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 12:13:04 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/15 01:53:28 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/17 19:30:45 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdbool.h>
 
 # define ESC 27
-# define GAME_BOARD_SIZE 4
+# define BOARD_SIZE 4
 # define DRAW_ROW 25
 # define DRAW_COL 50
 
@@ -31,9 +31,16 @@ typedef enum e_state
 	STATE_QUIT
 }	t_state;
 
+enum e_const
+{
+	WIN_VALUE = 2048
+};
+
 typedef struct s_data
 {
 	t_state	print_state;
+	int		win_value;
+	bool	won;
 	int		score;
 	int		window_row;
 	int		window_col;

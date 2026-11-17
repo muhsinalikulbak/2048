@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/11/15 01:27:19 by muhsin            #+#    #+#              #
-#    Updated: 2026/11/15 01:27:20 by muhsin           ###   ########.fr        #
+#    Updated: 2026/11/17 19:15:30 by muhsin           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -18,9 +18,15 @@ LDFLAGS		= -L./libft -lft -lncurses
 LIBFT		= ./libft/libft.a
 OBJ_DIR		= ./obj
 
+
+# Make silent
+MAKEFLAGS += --silent
+
 SRCS		= src/main.c \
 			  src/reset_board.c \
-			  src/print.c
+			  src/print.c \
+			  src/move_board.c \
+			  src/init.c
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 DEPS		= $(OBJS:.o=.d)
 
