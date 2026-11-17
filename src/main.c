@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/17 19:55:00 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/17 19:58:59 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,6 @@
 #include "print.h"
 #include "move_board.h"
 #include "init.h"
-
-// initscr : screen'i başlatır
-// curs_set : imleci gizler, 1 = silik, 2 = tam gösterir
-// noecho : Basılan tuşların ekrana basılmasını engeller
-
-// nodelay : getch fonksiyonu normalde bloklar (veri bekler), bloklamadan veri alabilmeyi sağlar
-// cbreak : Tuşlar enter beklenmeden okunur, normalde enter'a basılması gerekir.  
-// keypad : Yön ve fonksiyon tuşlarını aktif eder (esc, arrow keys vs)
-// set_escdelay : ESC tuşundaki 1 saniyelik bekleme gecikmesini 25 milisaniyeye indirir
 
 static bool is_valid_key(int key)
 {

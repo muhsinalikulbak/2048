@@ -1,6 +1,15 @@
 #include "init.h"
 #include "libft.h"
 
+// initscr : screen'i başlatır
+// curs_set : imleci gizler, 1 = silik, 2 = tam gösterir
+// noecho : Basılan tuşların ekrana basılmasını engeller
+
+// nodelay : getch fonksiyonu normalde bloklar (veri bekler), bloklamadan veri alabilmeyi sağlar
+// cbreak : Tuşlar enter beklenmeden okunur, normalde enter'a basılması gerekir.  
+// keypad : Yön ve fonksiyon tuşlarını aktif eder (esc, arrow keys vs)
+// set_escdelay : ESC tuşundaki 1 saniyelik bekleme gecikmesini 25 milisaniyeye indirir
+
 void	update_size(t_data *d)
 {
 	getmaxyx(stdscr, d->window_row, d->window_col);

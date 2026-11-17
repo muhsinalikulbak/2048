@@ -29,6 +29,7 @@ void    print_updated_board(int board[4][4], int start_y, int start_x)
 	int		i;
 	int		j;
 	int		k;
+	int		pair;
 	int		draw_y;
 	int		draw_x;
 	char	buffer[20];
@@ -50,7 +51,8 @@ void    print_updated_board(int board[4][4], int start_y, int start_x)
 			k = 0;
 			while (buffer[k])
 			{
-				mvaddch(start_y + draw_y, start_x + draw_x + k, buffer[k] | COLOR_PAIR(board[i][j]) | A_BOLD);
+				pair = board[i][j] > 128 ? 128 : board[i][j];
+				mvaddch(start_y + draw_y, start_x + draw_x + k, buffer[k] | COLOR_PAIR(pair) | A_BOLD);
 				k++;
 			}
 			j++;
