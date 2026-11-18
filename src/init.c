@@ -53,6 +53,7 @@ bool    init(t_data *d)
 {
 	init_screen();
 	update_size(d);
+    srand(time(NULL));
 	if (!init_colors())
 	{
 		endwin();
@@ -69,6 +70,7 @@ bool    init(t_data *d)
 	// Burada define win value'yu parse et
 	// int olabilirysa değişkene ata
 	// edilemiyorsa oto 2048 ata
+	d->win_value = WIN_VALUE;
 	d->won = false;
     return true;
 }

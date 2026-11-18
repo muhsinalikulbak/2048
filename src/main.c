@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/17 19:58:59 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/19 01:06:46 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,28 @@ int	main(void)
 		else
 		{
 			move_board(&d, key, &d.score);
+			print_updated_board(d.board, d.start_y, d.start_x);
+			refresh();
+
 			if (!d.won && has_win(d.board, d.win_value))
 			{   
 				d.won = true;
 				// Burada you win ekranı 
 				// Ve devam etmek için SPACE
 				// Oyunu sonlandırmak için ESC tuşu koyulacak
+
+				// Devam ediyorsa win yazısını silmek için
+				erase();
+				print_updated_board(d.board, d.start_y, d.start_x);
 			}
 
 			if (!has_move(d.board))
 			{
 				// Oyun bittiyse eğer Kaybettiniz yazsın ve
 				// Menu için ESC, Restart için R basma ekranı gelsin
+				mvaddstr(LINES / 2, (COLS - ft_strlen("FINISH")) / 2, "FINISH");
+				// break;
 			}
-			print_updated_board(d.board, d.start_y, d.start_x);
-			refresh();
 		}		
 	}
 	endwin();

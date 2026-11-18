@@ -6,7 +6,7 @@
 #    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/11/15 01:27:19 by muhsin            #+#    #+#              #
-#    Updated: 2026/11/17 19:15:30 by muhsin           ###   ########.fr        #
+#    Updated: 2026/11/19 00:45:10 by muhsin           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -26,7 +26,8 @@ SRCS		= src/main.c \
 			  src/reset_board.c \
 			  src/print.c \
 			  src/move_board.c \
-			  src/init.c
+			  src/init.c \
+			  src/spawn_tile.c
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 DEPS		= $(OBJS:.o=.d)
 
