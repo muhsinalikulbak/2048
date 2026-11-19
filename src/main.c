@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/19 01:06:46 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/19 15:14:21 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,49 @@ static bool is_valid_key(int key)
 	return (false);
 }
 
+static void game_loop(t_data *d)
+{
+	int key;
+
+	key = 0;
+	while (key != ESC)
+	{
+		key = getch();
+		while (!is_valid_key(key))
+			key = getch();
+
+		if (key == 'R' || key == 'r')  
+			reset_board(d);
+		else if (key == ESC)
+			return;
+		else
+		{
+			move_board(d, key, &d->score);
+			draw_board(d->board, d->start_y, d->start_x);
+			refresh();
+
+			if (!d->won && has_win(d->board, d->win_value))
+			{   
+				d->won = true;
+				// Burada you win ekranı 
+				// Ve devam etmek için SPACE
+				// Oyunu sonlandırmak için ESC tuşu koyulacak
+
+				// Devam ediyorsa win yazısını silmek için
+				erase();
+				draw_board(d->board, d->start_y, d->start_x);
+			}
+
+			if (!has_valid_move(d->board))
+			{
+				// Oyun bittiyse eğer Kaybettiniz yazsın ve
+				// Menu için ESC, Restart için R basma ekranı gelsin
+				mvaddstr(LINES / 2, (COLS - ft_strlen("FINISH")) / 2, "FINISH");
+				// break;
+			}
+		}	
+	}
+}
 
 int	main(void)
 {
@@ -44,44 +87,17 @@ int	main(void)
 		endwin();
 		return 0;
 	}
-	reset_board(&d); // reset board zaten random 2 sayı koyacak
-
+	
 	while (key != ESC)
 	{
-		key = getch();
-		while (!is_valid_key(key))
-			key = getch();
-
-		if (key == 'R' || key == 'r')  
-			reset_board(&d);
-		else if (key == ESC)
-			break;
-		else
+		reset_board(&d);
+		game_loop(&d);
+		key = print_menu(d.window_col);
+		if (key == ESC)
 		{
-			move_board(&d, key, &d.score);
-			draw_board(d.board, d.start_y, d.start_x);
-			refresh();
-
-			if (!d.won && has_win(d.board, d.win_value))
-			{   
-				d.won = true;
-				// Burada you win ekranı 
-				// Ve devam etmek için SPACE
-				// Oyunu sonlandırmak için ESC tuşu koyulacak
-
-				// Devam ediyorsa win yazısını silmek için
-				erase();
-				draw_board(d.board, d.start_y, d.start_x);
-			}
-
-			if (!has_valid_move(d.board))
-			{
-				// Oyun bittiyse eğer Kaybettiniz yazsın ve
-				// Menu için ESC, Restart için R basma ekranı gelsin
-				mvaddstr(LINES / 2, (COLS - ft_strlen("FINISH")) / 2, "FINISH");
-				// break;
-			}
-		}		
+			endwin();
+			return 0;
+		}
 	}
 	endwin();
 	return (0);
