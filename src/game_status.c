@@ -16,15 +16,9 @@ bool has_win(int board[4][4], int target)
 // Check for lose status 
 bool has_valid_move(int board[4][4])
 {
-    int i;
-    int j;
-
-    i = 0;
-    j = 0;
-    while (i < BOARD_SIZE)
+    for (int i = 0; i < BOARD_SIZE; i++)
     {
-        j = 0;
-        while (j < BOARD_SIZE)
+        for (int j = 0; j < BOARD_SIZE; j++)
         {
             if (board[i][j] == 0)
                 return true;
@@ -38,9 +32,7 @@ bool has_valid_move(int board[4][4])
                 if (board[i+1][j] == 0 || board[i][j] == board[i+1][j])
                     return true;
             }
-            j++;
         }
-        i++;
     }
     return false;
 }

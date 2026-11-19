@@ -3,18 +3,12 @@
 // Calculate move up
 void  move_up(t_data *d, int *score) // 0,0 1,0 2,0 3,0 --- 0,1 1,1 1,2...
 {
-    int     i;
-    int     j;
-    int     last_cell;
+    int     last_cell = 0;
 
-    last_cell = 0;
-    i = 0;
-    j = 0;
-    while (i < BOARD_SIZE)
+    for (int i = 0; i < BOARD_SIZE; i++)
     {
         last_cell = 0;
-        j = 0;
-        while (j < BOARD_SIZE)
+        for (int j = 0; j < BOARD_SIZE; j++)
         {
             if (d->board[j][i] > 0 && j != last_cell)
             {
@@ -40,27 +34,19 @@ void  move_up(t_data *d, int *score) // 0,0 1,0 2,0 3,0 --- 0,1 1,1 1,2...
                     }
                 }
             }
-            j++;
         }
-        i++;
     }
 }
 
 // Calculate move down
 void  move_down(t_data *d, int *score)
 {
-    int     i;
-    int     j;
-    int     last_cell;
+    int     last_cell = 0;
 
-    last_cell = 0;
-    i = 0;
-    j = 0;
-    while (i < BOARD_SIZE)
+    for (int i = 0; i < BOARD_SIZE; i++)
     {
         last_cell = BOARD_SIZE - 1;
-        j = BOARD_SIZE - 1;
-        while (j >= 0)
+        for (int j = BOARD_SIZE - 1; j >= 0; j--)
         {
             if (d->board[j][i] > 0 && j != last_cell)
             {
@@ -87,8 +73,6 @@ void  move_down(t_data *d, int *score)
                     }
                 }
             }
-            j--;
         }
-        i++;
     }
 }

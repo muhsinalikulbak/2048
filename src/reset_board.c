@@ -15,40 +15,26 @@
 
 static void	reset_game_board(int board[4][4])
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < BOARD_SIZE)
+	for (int i = 0; i < BOARD_SIZE; i++)
 	{
-		j = 0;
-		while (j < BOARD_SIZE)
+		for (int j = 0; j < BOARD_SIZE; j++)
 		{
 			board[i][j] = 0;
-			j++;
 		}
-		i++;
 	}
 }
 
 static void	draw_static_map(int start_y, int start_x)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < DRAW_ROW)
+	for (int i = 0; i < DRAW_ROW; i++)
 	{
-		j = 0;
-		while (j < DRAW_COL)
+		for (int j = 0; j < DRAW_COL; j++)
 		{
 			if (i % 6 == 0 || j % 12 == 0 || (j - 1) % 12 == 0)
 				mvaddch(start_y + i, start_x + j, ' ' | COLOR_PAIR(1));
 			else
 				mvaddch(start_y + i, start_x + j, ' ' | COLOR_PAIR(3));
-			j++;
 		}
-		i++;
 	}
 }
 

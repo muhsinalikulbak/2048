@@ -4,13 +4,9 @@
 
 void	clear_cell_row(int start_y, int start_x, int draw_y, int draw_x)
 {
-	int	i;
-
-	i = 0;
-	while (i < 10)
+	for (int i = 0; i < 10; i++)
 	{
 		mvaddch(start_y + draw_y, start_x + draw_x + i, ' ' | COLOR_PAIR(3));
-		i++;
 	}
 }
 
@@ -38,24 +34,19 @@ static void	int_to_str(char buffer[20], int num)
 
 void    draw_board(int board[4][4], int start_y, int start_x)
 {
-	int		i;
-	int		j;
 	int		k;
 	int		pair;
 	int		draw_y;
 	int		draw_x;
 	char	buffer[20];
 
-	i = 0;
-	j = 0;
 	k = 0;
 	draw_y = 0;
 	draw_x = 0;
-	while (i < 4)
+	for (int i = 0; i < 4; i++)
 	{
-		j = 0;
 		draw_y = i * 6 + 3;
-		while (j < 4)
+		for (int j = 0; j < 4; j++)
 		{
 			draw_x = j * 12 + 2;
 			clear_cell_row(start_y, start_x, draw_y, draw_x);
@@ -67,9 +58,7 @@ void    draw_board(int board[4][4], int start_y, int start_x)
 				mvaddch(start_y + draw_y, start_x + draw_x + k, buffer[k] | COLOR_PAIR(pair) | A_BOLD);
 				k++;
 			}
-			j++;
 		}
-		i++;
 	}
 	
 }
@@ -77,19 +66,16 @@ void    draw_board(int board[4][4], int start_y, int start_x)
 
 void	print_movable(int window_col, char	*str, int row)
 {
-	int	i;
 	int len;
 	int	speed;
 
 	speed = 100;
 	len = ft_strlen(str);
-	i = 0;
-	while (i < len / 2)
+	for (int i = 0; i < len / 2; i++)
 	{
 		mvaddch(row, (window_col - len) / 2 + i, str[i]);
 		mvaddch(row, (window_col - len) / 2 + len - i - 1, str[len - 1 - i]);
 		refresh();
-		i++;
 		napms(speed);
 	}
 }
