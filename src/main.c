@@ -11,11 +11,12 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "game_loop.h"
+#include "game.h"
 #include "libft.h"
 #include "reset_board.h"
 #include "print.h"
 #include "move_board.h"
+#include "game_status.h"
 #include "init.h"
 
 static bool is_valid_key(int key)
@@ -58,7 +59,7 @@ int	main(void)
 		else
 		{
 			move_board(&d, key, &d.score);
-			print_updated_board(d.board, d.start_y, d.start_x);
+			draw_board(d.board, d.start_y, d.start_x);
 			refresh();
 
 			if (!d.won && has_win(d.board, d.win_value))
@@ -70,10 +71,10 @@ int	main(void)
 
 				// Devam ediyorsa win yazısını silmek için
 				erase();
-				print_updated_board(d.board, d.start_y, d.start_x);
+				draw_board(d.board, d.start_y, d.start_x);
 			}
 
-			if (!has_move(d.board))
+			if (!has_valid_move(d.board))
 			{
 				// Oyun bittiyse eğer Kaybettiniz yazsın ve
 				// Menu için ESC, Restart için R basma ekranı gelsin

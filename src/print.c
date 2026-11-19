@@ -2,8 +2,20 @@
 #include "libft.h"
 #include "reset_board.h"
 
+void	clear_cell_row(int start_y, int start_x, int draw_y, int draw_x)
+{
+	int	i;
+
+	i = 0;
+	while (i < 10)
+	{
+		mvaddch(start_y + draw_y, start_x + draw_x + i, ' ' | COLOR_PAIR(3));
+		i++;
+	}
+}
+
 // str parse without call malloc
-static void	str_parse(char buffer[20], int num)
+static void	int_to_str(char buffer[20], int num)
 {
 	int	len;
 	int	cpy;
@@ -24,7 +36,7 @@ static void	str_parse(char buffer[20], int num)
 	}
 }
 
-void    print_updated_board(int board[4][4], int start_y, int start_x)
+void    draw_board(int board[4][4], int start_y, int start_x)
 {
 	int		i;
 	int		j;
@@ -46,8 +58,8 @@ void    print_updated_board(int board[4][4], int start_y, int start_x)
 		while (j < 4)
 		{
 			draw_x = j * 12 + 2;
-			reset_cell(start_y, start_x, draw_y, draw_x);
-			str_parse(buffer, board[i][j]);
+			clear_cell_row(start_y, start_x, draw_y, draw_x);
+			int_to_str(buffer, board[i][j]);
 			k = 0;
 			while (buffer[k])
 			{

@@ -1,7 +1,7 @@
 #ifndef SPAWN_TILE_H
 # define SPAWN_TILE_H
 
-#include "game_loop.h"
+#include "game.h"
 
 void spawn_tile(t_data *d);
 

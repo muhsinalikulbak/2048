@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAME_LOOP_H
-# define GAME_LOOP_H
+#ifndef GAME_H
+# define GAME_H
 
 # include <ncurses.h>
 # include <stdlib.h>

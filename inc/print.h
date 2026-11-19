@@ -12,10 +12,11 @@
 
 #ifndef PRINT_H
 # define PRINT_H
-# include "game_loop.h"
+# include "game.h"
 
+void	clear_cell_row(int start_y, int start_x, int draw_y, int draw_x);
 void	print_movable(int window_col, char	*str, int row);
 int		print_menu(int start_x);
-void	print_updated_board(int board[4][4], int start_y, int start_x);
+void	draw_board(int board[4][4], int start_y, int start_x);
 
 #endif

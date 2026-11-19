@@ -71,6 +71,7 @@ bool    init(t_data *d)
 	// int olabilirysa değişkene ata
 	// edilemiyorsa oto 2048 ata
 	d->win_value = WIN_VALUE;
+	d->score = 0;
 	d->won = false;
     return true;
 }

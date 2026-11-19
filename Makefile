@@ -26,6 +26,9 @@ SRCS		= src/main.c \
 			  src/reset_board.c \
 			  src/print.c \
 			  src/move_board.c \
+			  src/move_vertical.c \
+			  src/move_horizontal.c \
+			  src/game_status.c \
 			  src/init.c \
 			  src/spawn_tile.c
 OBJS		= $(SRCS:%.c=$(OBJ_DIR)/%.o)
