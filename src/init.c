@@ -20,6 +20,7 @@ void	update_size(t_data *d)
 static void	init_screen(void)
 {
 	initscr();
+	flushinp();
 	curs_set(0); // terminal küçükken burada kod patlıyor neden anlamadım buraya bak
 	noecho();
 	nodelay(stdscr, TRUE);
@@ -44,6 +45,7 @@ static bool	init_colors(void)
 
 	init_pair(1, COLOR_BLACK, COLOR_RED);
 	init_pair(3, COLOR_BLACK, COLOR_BLACK);
+	init_pair(129, COLOR_CYAN, COLOR_BLACK);
 	init_pair(5, 198, -1);
 
 	return (true);

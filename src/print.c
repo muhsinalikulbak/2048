@@ -11,7 +11,7 @@ void	clear_cell_row(int start_y, int start_x, int draw_y, int draw_x)
 }
 
 // str parse without call malloc
-static void	int_to_str(char buffer[20], int num)
+static void	int_to_str(char buffer[], int num)
 {
 	int	len;
 	int	cpy;
@@ -30,6 +30,33 @@ static void	int_to_str(char buffer[20], int num)
 		buffer[len--] = (char)(num % 10 + '0');
 		num /= 10;
 	}
+}
+
+void	draw_score(t_data *d)
+{
+	char *str = "Score : ";
+	char str_num[20];
+	
+	int_to_str(str_num, d->score);
+	char *join = ft_strjoin(str, str_num);
+	int len = ft_strlen(join);
+
+	attron(COLOR_PAIR(129));
+	attron(A_BOLD);
+	mvaddstr(0, (d->window_col - len) / 2, join);
+	attroff(COLOR_PAIR(129));
+	attroff(A_BOLD);
+	free(join);
+}
+
+void	draw_left_menu()
+{
+	attron(COLOR_PAIR(129));
+	attron(A_BOLD);
+	mvaddstr(0, 0, "Menu: ESC");
+	mvaddstr(1, 0, "Restart: R");
+	attroff(COLOR_PAIR(129));
+	attroff(A_BOLD);
 }
 
 void    draw_board(int board[4][4], int start_y, int start_x)
@@ -64,7 +91,7 @@ void    draw_board(int board[4][4], int start_y, int start_x)
 }
 
 
-void	print_movable(int window_col, char	*str, int row)
+void	draw_movable(int window_col, char	*str, int row)
 {
 	int len;
 	int	speed;
@@ -80,7 +107,7 @@ void	print_movable(int window_col, char	*str, int row)
 	}
 }
 
-int	print_menu(int start_x)
+int	draw_menu(int start_x)
 {
 	int		i;
 	int		key;
@@ -96,7 +123,7 @@ int	print_menu(int start_x)
 	attron(COLOR_PAIR(5));
 	attron(A_BOLD);
 
-	print_movable(start_x, "WELCOME 2048 MADE IT BY Mkulbak", i++);
+	draw_movable(start_x, "WELCOME 2048 MADE IT BY Mkulbak", i++);
 	mvaddstr(i++, (start_x - ft_strlen(start)) / 2, start);
 	mvaddstr(i++, (start_x - ft_strlen(quit)) / 2, quit);
 

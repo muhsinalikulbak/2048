@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/19 15:14:21 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/19 17:07:58 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static void game_loop(t_data *d)
 		{
 			move_board(d, key, &d->score);
 			draw_board(d->board, d->start_y, d->start_x);
+			draw_left_menu();
+			draw_score(d);
 			refresh();
 
 			if (!d->won && has_win(d->board, d->win_value))
@@ -81,7 +83,7 @@ int	main(void)
 	if (!init(&d))
 		return 1;
 
-	key = print_menu(d.window_col);
+	key = draw_menu(d.window_col);
 	if (key == ESC)
 	{
 		endwin();
@@ -92,7 +94,7 @@ int	main(void)
 	{
 		reset_board(&d);
 		game_loop(&d);
-		key = print_menu(d.window_col);
+		key = draw_menu(d.window_col);
 		if (key == ESC)
 		{
 			endwin();
