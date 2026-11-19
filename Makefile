@@ -24,7 +24,7 @@ MAKEFLAGS += --silent
 
 SRCS		= src/main.c \
 			  src/reset_board.c \
-			  src/print.c \
+			  src/draw.c \
 			  src/move_board.c \
 			  src/move_vertical.c \
 			  src/move_horizontal.c \

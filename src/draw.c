@@ -1,4 +1,4 @@
-#include "print.h"
+#include "draw.h"
 #include "libft.h"
 #include "reset_board.h"
 
@@ -13,6 +13,13 @@ void	clear_cell_row(int start_y, int start_x, int draw_y, int draw_x)
 // str parse without call malloc
 static void	int_to_str(char buffer[], int num)
 {
+	if (num == 0)
+	{
+		buffer[0] = '0';
+		buffer[1] = '\0';
+		return;
+	}
+
 	int	len;
 	int	cpy;
 
@@ -43,7 +50,9 @@ void	draw_score(t_data *d)
 
 	attron(COLOR_PAIR(129));
 	attron(A_BOLD);
+
 	mvaddstr(0, (d->window_col - len) / 2, join);
+
 	attroff(COLOR_PAIR(129));
 	attroff(A_BOLD);
 	free(join);
@@ -53,21 +62,22 @@ void	draw_left_menu()
 {
 	attron(COLOR_PAIR(129));
 	attron(A_BOLD);
+	
 	mvaddstr(0, 0, "Menu: ESC");
 	mvaddstr(1, 0, "Restart: R");
+
 	attroff(COLOR_PAIR(129));
 	attroff(A_BOLD);
 }
 
 void    draw_board(int board[4][4], int start_y, int start_x)
 {
-	int		k;
+	int		mid;
 	int		pair;
 	int		draw_y;
 	int		draw_x;
 	char	buffer[20];
 
-	k = 0;
 	draw_y = 0;
 	draw_x = 0;
 	for (int i = 0; i < 4; i++)
@@ -76,15 +86,22 @@ void    draw_board(int board[4][4], int start_y, int start_x)
 		for (int j = 0; j < 4; j++)
 		{
 			draw_x = j * 12 + 2;
+			
 			clear_cell_row(start_y, start_x, draw_y, draw_x);
+			if (board[i][j] == 0)
+				continue;
+
+			pair = board[i][j] > 128 ? 128 : board[i][j];
 			int_to_str(buffer, board[i][j]);
-			k = 0;
-			while (buffer[k])
-			{
-				pair = board[i][j] > 128 ? 128 : board[i][j];
-				mvaddch(start_y + draw_y, start_x + draw_x + k, buffer[k] | COLOR_PAIR(pair) | A_BOLD);
-				k++;
-			}
+			mid = (10 - ft_strlen(buffer)) / 2;
+
+			attron(COLOR_PAIR(pair));
+			attroff(A_BOLD);
+
+			mvaddstr(start_y + draw_y, start_x + draw_x + mid, buffer);
+			
+			attroff(COLOR_PAIR(pair));
+			attroff(A_BOLD);
 		}
 	}
 	

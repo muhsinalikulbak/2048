@@ -14,7 +14,7 @@
 #include "game.h"
 #include "libft.h"
 #include "reset_board.h"
-#include "print.h"
+#include "draw.h"
 #include "move_board.h"
 #include "game_status.h"
 #include "init.h"
