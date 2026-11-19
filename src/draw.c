@@ -2,11 +2,74 @@
 #include "libft.h"
 #include "reset_board.h"
 
+void	print_2048_fire(t_data *d)
+{
+	static const char	*lines[] = {
+		"    )    )      )  (      ",
+		" ( /( ( /(   ( /(  )\\ (   ",
+		" )(_)))\\())  )\\())((_))\\  ",
+		"((_) ((_)\\  ((_)\\   _((_) ",
+		"|_  )/  (_)| | (_) ( _ )  ",
+		" / /| () | |_  _|  / _ \\  ",
+		"/___|\\__/    |_|   \\___/ "
+	};
+
+	int	start_y = 7;
+	int start_x = (d->window_col - 25) / 2;
+
+	start_y = (start_y - 4);
+	
+	
+	attron(COLOR_PAIR(PAIR_TITLE));
+	attron(A_BOLD);
+	for (int i = 0; i < 7; i++)
+	{
+		mvaddstr(start_y + i, start_x, lines[i]);
+
+	}
+	attroff(A_BOLD);
+	attroff(COLOR_PAIR(PAIR_TITLE));
+	refresh();
+}
+
+void	print_2048_diagonal(int window_row, int window_col)
+{
+	static const char	*lines[] = {
+		"                                          ,---.-,",
+		"                                   ,--,  '   ,'  '.",
+		"      ,----,     ,----..         ,--.'| /   /      \\",
+		"    .'   .' \\   /   /   \\     ,--,  | :.   ;  ,/.  :",
+		"  ,----,'    | /   .     : ,---.'|  : ''   |  | :  ;",
+		"  |    :  .  ;.   /   ;.  \\;   : |  | ;'   |  ./   :",
+		"  ;    |.'  /.   ;   /  ` ;|   | : _' ||   :       ,",
+		"  `----'/  ; ;   |  ; \\ ; |:   : |.'  | \\   \\     /",
+		"    /  ;  /  |   :  | ; | '|   ' '  ; :  ;   ,   '\\",
+		"   ;  /  /-, .   |  ' ' ' :\\   \\  .'. | /   /      \\",
+		"  /  /  /.`| '   ;  \\; /  | `---`:  | '.   ;  ,/.  :",
+		"./__;      :  \\   \\  ',  /       '  ; |'   |  | :  ;",
+		"|   :    .'    ;   :    /        |  : ;'   |  ./   :",
+		";   | .'        \\   \\ .'         '  ,/ |   :      /",
+		"`---'            `---`           '--'   \\   \\   .'",
+		"                                         `---`-'"
+	};
+
+	int	start_y = (window_row - 16) / 2;
+	int	start_x = (window_col - 52) / 2;
+
+	attron(COLOR_PAIR(PAIR_TITLE));
+	attron(A_BOLD);
+	for (int i = 0; i < 16; i++)
+		mvaddstr(start_y + i, start_x, lines[i]);
+	attroff(A_BOLD);
+	attroff(COLOR_PAIR(PAIR_TITLE));
+	refresh();
+}
+
 void	clear_cell_row(int start_y, int start_x, int draw_y, int draw_x)
 {
 	for (int i = 0; i < 10; i++)
 	{
-		mvaddch(start_y + draw_y, start_x + draw_x + i, ' ' | COLOR_PAIR(3));
+			mvaddch(start_y + draw_y, start_x + draw_x + i, ' ' | COLOR_PAIR(PAIR_EMPTY));
 	}
 }
 
@@ -48,25 +111,25 @@ void	draw_score(t_data *d)
 	char *join = ft_strjoin(str, str_num);
 	int len = ft_strlen(join);
 
-	attron(COLOR_PAIR(129));
+	attron(COLOR_PAIR(PAIR_MENU));
 	attron(A_BOLD);
 
 	mvaddstr(0, (d->window_col - len) / 2, join);
 
-	attroff(COLOR_PAIR(129));
+	attroff(COLOR_PAIR(PAIR_MENU));
 	attroff(A_BOLD);
 	free(join);
 }
 
 void	draw_left_menu()
 {
-	attron(COLOR_PAIR(129));
+	attron(COLOR_PAIR(PAIR_MENU));
 	attron(A_BOLD);
 	
 	mvaddstr(0, 0, "Menu: ESC");
 	mvaddstr(1, 0, "Restart: R");
 
-	attroff(COLOR_PAIR(129));
+	attroff(COLOR_PAIR(PAIR_MENU));
 	attroff(A_BOLD);
 }
 
@@ -91,7 +154,7 @@ void    draw_board(int board[4][4], int start_y, int start_x)
 			if (board[i][j] == 0)
 				continue;
 
-			pair = board[i][j] > 128 ? 128 : board[i][j];
+			pair = board[i][j] > 128 ? PAIR_128 : board[i][j];
 			int_to_str(buffer, board[i][j]);
 			mid = (10 - ft_strlen(buffer)) / 2;
 
@@ -115,6 +178,7 @@ void	draw_movable(int window_col, char	*str, int row)
 
 	speed = 100;
 	len = ft_strlen(str);
+	
 	for (int i = 0; i < len / 2; i++)
 	{
 		mvaddch(row, (window_col - len) / 2 + i, str[i]);
@@ -122,9 +186,12 @@ void	draw_movable(int window_col, char	*str, int row)
 		refresh();
 		napms(speed);
 	}
+	if (len % 2 == 1)
+		mvaddch(row, (window_col - len) / 2 + len/2, str[len/2]);
+	refresh();
 }
 
-int	draw_menu(int start_x)
+int	draw_menu(t_data *d)
 {
 	int		i;
 	int		key;
@@ -136,17 +203,21 @@ int	draw_menu(int start_x)
 	start = "SPACE: Start";
 	quit = "ESC: Quit";
 
+	bkgd(' ' | COLOR_PAIR(PAIR_EMPTY));
 	erase();
-	attron(COLOR_PAIR(5));
+	refresh();
+
+	attron(COLOR_PAIR(PAIR_TITLE));
 	attron(A_BOLD);
 
-	draw_movable(start_x, "WELCOME 2048 MADE IT BY Mkulbak", i++);
-	mvaddstr(i++, (start_x - ft_strlen(start)) / 2, start);
-	mvaddstr(i++, (start_x - ft_strlen(quit)) / 2, quit);
-
-	attroff(COLOR_PAIR(5));
+	draw_movable(d->window_col, "WELCOME 2048 MADE IT BY Mkulbak", i++);
+	mvaddstr(i++, (d->window_col - ft_strlen(start)) / 2, start);
+	mvaddstr(i++, (d->window_col - ft_strlen(quit)) / 2, quit);
+	attroff(COLOR_PAIR(PAIR_TITLE));
 	attroff(A_BOLD);
 	refresh();
+	
+	print_2048_diagonal(d->window_row, d->window_col);
 
 	while (key != ' ' && key != ESC)
 		key = getch();

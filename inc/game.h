@@ -36,6 +36,21 @@ enum e_const
 	WIN_VALUE = 2048
 };
 
+enum e_pair
+{
+	PAIR_EMPTY = 3,
+	PAIR_TWO = 2,
+	PAIR_FOUR = 4,
+	PAIR_EIGHT = 8,
+	PAIR_16 = 16,
+	PAIR_32 = 32,
+	PAIR_64 = 64,
+	PAIR_128 = 128,
+	PAIR_WALL = 1,
+	PAIR_MENU = 129,
+	PAIR_TITLE = 5
+};
+
 typedef struct s_data
 {
 	t_state	print_state;

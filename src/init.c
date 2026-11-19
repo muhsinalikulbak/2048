@@ -31,22 +31,28 @@ static void	init_screen(void)
 
 static bool	init_colors(void)
 {
+	int	black;
+
 	if (!has_colors())
 		return (false);
 	start_color();
 	use_default_colors();
-	init_pair(2, COLOR_WHITE,  COLOR_BLACK);
-	init_pair(4, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(8, COLOR_GREEN,  COLOR_BLACK);
-	init_pair(16, COLOR_CYAN,   COLOR_BLACK);
-	init_pair(32, COLOR_BLUE,   COLOR_BLACK);
-	init_pair(64, COLOR_MAGENTA,COLOR_BLACK);
-	init_pair(128, COLOR_RED,    COLOR_BLACK);
+	black = COLOR_BLACK;
+	if (COLORS >= 256)
+		black = 16;
 
-	init_pair(1, COLOR_BLACK, COLOR_RED);
-	init_pair(3, COLOR_BLACK, COLOR_BLACK);
-	init_pair(129, COLOR_CYAN, COLOR_BLACK);
-	init_pair(5, 198, -1);
+	init_pair(PAIR_TWO, COLOR_WHITE, black);
+	init_pair(PAIR_FOUR, COLOR_YELLOW, black);
+	init_pair(PAIR_EIGHT, COLOR_GREEN, black);
+	init_pair(PAIR_16, COLOR_CYAN, black);
+	init_pair(PAIR_32, COLOR_BLUE, black);
+	init_pair(PAIR_64, COLOR_MAGENTA, black);
+	init_pair(PAIR_128, COLOR_RED, black);
+
+	init_pair(PAIR_WALL, COLOR_BLACK, COLOR_RED);
+	init_pair(PAIR_EMPTY, black, black);
+	init_pair(PAIR_MENU, COLOR_CYAN, black);
+	init_pair(PAIR_TITLE, 198, black);
 
 	return (true);
 }
