@@ -41,9 +41,9 @@ static bool	init_colors(void)
 	if (COLORS >= 256)
 		black = 16;
 
-	init_pair(PAIR_TWO, COLOR_WHITE, black);
-	init_pair(PAIR_FOUR, COLOR_YELLOW, black);
-	init_pair(PAIR_EIGHT, COLOR_GREEN, black);
+	init_pair(PAIR_2, COLOR_WHITE, black);
+	init_pair(PAIR_4, COLOR_YELLOW, black);
+	init_pair(PAIR_8, COLOR_GREEN, black);
 	init_pair(PAIR_16, COLOR_CYAN, black);
 	init_pair(PAIR_32, COLOR_BLUE, black);
 	init_pair(PAIR_64, COLOR_MAGENTA, black);

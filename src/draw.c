@@ -56,12 +56,34 @@ void	print_2048_diagonal(int window_row, int window_col)
 	int	start_y = (window_row - 16) / 2;
 	int	start_x = (window_col - 52) / 2;
 
-	attron(COLOR_PAIR(PAIR_TITLE));
+	attron(COLOR_PAIR(PAIR_4));
 	attron(A_BOLD);
 	for (int i = 0; i < 16; i++)
+	{
 		mvaddstr(start_y + i, start_x, lines[i]);
+		refresh();
+	}
 	attroff(A_BOLD);
-	attroff(COLOR_PAIR(PAIR_TITLE));
+	attroff(COLOR_PAIR(PAIR_4));
+
+	for (int i = 0; i < 16; i++)
+	{
+		attron(COLOR_PAIR(PAIR_TITLE));
+		attron(A_BOLD);
+		mvaddstr(start_y + i, start_x, lines[i]);
+		attroff(A_BOLD);
+		attroff(COLOR_PAIR(PAIR_TITLE));
+		refresh();
+		napms(60);
+
+		attron(COLOR_PAIR(PAIR_4));
+		attron(A_BOLD);
+		mvaddstr(start_y + i, start_x, lines[i]);
+		attroff(A_BOLD);
+		attroff(COLOR_PAIR(PAIR_4));
+		refresh();
+
+	}
 	refresh();
 }
 
@@ -108,17 +130,16 @@ void	draw_score(t_data *d)
 	char str_num[20];
 	
 	int_to_str(str_num, d->score);
-	char *join = ft_strjoin(str, str_num);
-	int len = ft_strlen(join);
+	int len = ft_strlen(str_num) + ft_strlen(str);
 
 	attron(COLOR_PAIR(PAIR_MENU));
 	attron(A_BOLD);
 
-	mvaddstr(0, (d->window_col - len) / 2, join);
+	mvaddstr(0, (d->window_col - len) / 2, str);
+	mvaddstr(0, (d->window_col - len) / 2 + ft_strlen(str), str_num);
 
 	attroff(COLOR_PAIR(PAIR_MENU));
 	attroff(A_BOLD);
-	free(join);
 }
 
 void	draw_left_menu()
@@ -217,9 +238,11 @@ int	draw_menu(t_data *d)
 	attroff(A_BOLD);
 	refresh();
 	
-	print_2048_diagonal(d->window_row, d->window_col);
-
+	
 	while (key != ' ' && key != ESC)
+	{
 		key = getch();
+		print_2048_diagonal(d->window_row, d->window_col);
+	}
 	return key;
 }

@@ -28,10 +28,22 @@ void spawn_tile(t_data *d)
                 count++;
                 if (count == rnd_num)
                 {
-                    d->board[i][j] = 2;
+                    d->board[i][j] = rand() % 10 == 0 ? 4 : 2;
                     return;
                 }
             }
         }
     }
 }
+
+
+// Oyunda 2'e 4'den yüzde doksan daha sık görünmeli
+// Yani 2 yüzde doksan sıklıkla görünürken, 4 yüzde on sıklıkla görünmeli.
+// rand() % 10 == 0 ? 4 : 2 yeterlidir.
+
+// Örneğin 1-100 arası 100 sayının 10 adet 10 böleni vardır.
+// Bu demektir ki N adet sayının yüzde 10 'U her zaman 10'a bölünen sayılardır.
+// Geri kalan yüzde 90 ise bölünmeyen.
+// Yani 100 adet random sayı çağırıp kontrol edersek bu olasılığı yakalayacağız.
+// İşte bunu kullanabiliriz. Gelen sayının 10'a bölünme ihtimali yüzde 10 olduğu için
+// 10'a bölünüyorsa 4, bölünmüyorsa 2 yapacağız.
