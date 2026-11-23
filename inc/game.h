@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 12:13:04 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/20 00:43:10 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/23 01:43:14 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef enum e_state
 	STATE_MENU,
 	STATE_GAME,
 	STATE_QUIT
-}	t_state;
+}	state;
 
 enum e_const
 {
@@ -53,7 +53,7 @@ enum e_pair
 
 typedef struct s_data
 {
-	t_state	print_state;
+	state	print_state;
 	int		win_value;
 	bool	won;
 	int		score;

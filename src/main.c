@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/19 21:30:02 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/24 01:07:33 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static void game_loop(t_data *d)
 	key = 0;
 	while (key != ESC)
 	{
-		key = getch();
+		key = get_key(d, STATE_GAME);
 		while (!is_valid_key(key))
-			key = getch();
+			key = get_key(d, STATE_GAME);
 
 		if (key == 'R' || key == 'r')  
 			reset_board(d);
@@ -84,23 +84,25 @@ int	main(void)
 	if (!init(&d))
 		return 1;
 
-	key = draw_menu(&d);
-	if (key == ESC)
+	draw_movable(d.window_col, "WELCOME 2048 MADE IT BY Mkulbak", 0);
+	draw_menu(&d);
+	while (key != ' ' && key != ESC)
 	{
-		endwin();
-		return 0;
+		key = get_key(&d, STATE_MENU);
+		print_2048_diagonal(d.window_row, d.window_col);
 	}
-	
+
 	while (key != ESC)
 	{
 		reset_board(&d);
 		game_loop(&d);
-		key = draw_menu(&d);
-
-		if (key == ESC)
+		draw_menu(&d);
+		
+		key = get_key(&d, STATE_MENU);
+		while (key != ' ' && key != ESC)
 		{
-			endwin();
-			return 0;
+			key = get_key(&d, STATE_MENU);
+			print_2048_diagonal(d.window_row, d.window_col);
 		}
 	}
 	endwin();

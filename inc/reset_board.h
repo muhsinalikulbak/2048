@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 01:54:06 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/19 14:47:11 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/24 01:09:58 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@
 # include <ncurses.h>
 
 void	reset_board(t_data *d);
-
+void	draw_static_map(int start_y, int start_x);
 #endif

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 01:51:34 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/20 21:54:57 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/24 01:11:00 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	reset_game_board(int board[4][4])
 	}
 }
 
-static void	draw_static_map(int start_y, int start_x)
+void	draw_static_map(int start_y, int start_x)
 {
 	for (int i = 0; i < DRAW_ROW; i++)
 	{

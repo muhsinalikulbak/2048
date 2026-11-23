@@ -1,6 +1,7 @@
 #include "draw.h"
 #include "libft.h"
 #include "reset_board.h"
+#include "init.h"
 
 void	print_2048_fire(t_data *d)
 {
@@ -25,7 +26,6 @@ void	print_2048_fire(t_data *d)
 	for (int i = 0; i < 7; i++)
 	{
 		mvaddstr(start_y + i, start_x, lines[i]);
-
 	}
 	attroff(A_BOLD);
 	attroff(COLOR_PAIR(PAIR_TITLE));
@@ -199,30 +199,30 @@ void	draw_movable(int window_col, char	*str, int row)
 
 	speed = 100;
 	len = ft_strlen(str);
-	
+
 	for (int i = 0; i < len / 2; i++)
 	{
-		mvaddch(row, (window_col - len) / 2 + i, str[i]);
-		mvaddch(row, (window_col - len) / 2 + len - i - 1, str[len - 1 - i]);
+		mvaddch(row, (window_col - len) / 2 + i, str[i] | COLOR_PAIR(PAIR_TITLE) | A_BOLD);
+		mvaddch(row, (window_col - len) / 2 + len - i - 1, str[len - 1 - i] | COLOR_PAIR(PAIR_TITLE) | A_BOLD);
 		refresh();
 		napms(speed);
 	}
 	if (len % 2 == 1)
-		mvaddch(row, (window_col - len) / 2 + len/2, str[len/2]);
+		mvaddch(row, (window_col - len) / 2 + len/2, str[len/2] | COLOR_PAIR(PAIR_TITLE) | A_BOLD);
 	refresh();
 }
 
-int	draw_menu(t_data *d)
+void	draw_menu(t_data *d)
 {
 	int		i;
-	int		key;
 	char	*quit;
 	char	*start;
+	char	*start_name;
 
 	i = 0;
-	key = 0;
 	start = "SPACE: Start";
 	quit = "ESC: Quit";
+	start_name = "WELCOME 2048 MADE IT BY Mkulbak";
 
 	bkgd(' ' | COLOR_PAIR(PAIR_EMPTY));
 	erase();
@@ -231,18 +231,10 @@ int	draw_menu(t_data *d)
 	attron(COLOR_PAIR(PAIR_TITLE));
 	attron(A_BOLD);
 
-	draw_movable(d->window_col, "WELCOME 2048 MADE IT BY Mkulbak", i++);
+	mvaddstr(i++, (d->window_col - ft_strlen(start_name)) / 2, start_name);
 	mvaddstr(i++, (d->window_col - ft_strlen(start)) / 2, start);
 	mvaddstr(i++, (d->window_col - ft_strlen(quit)) / 2, quit);
 	attroff(COLOR_PAIR(PAIR_TITLE));
 	attroff(A_BOLD);
 	refresh();
-	
-	
-	while (key != ' ' && key != ESC)
-	{
-		key = getch();
-		print_2048_diagonal(d->window_row, d->window_col);
-	}
-	return key;
 }
