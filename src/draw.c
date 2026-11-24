@@ -15,10 +15,8 @@ void	print_2048_fire(t_data *d)
 		"/___|\\__/    |_|   \\___/ "
 	};
 
-	int	start_y = 7;
+	int	start_y = d->start_y - 10;
 	int start_x = (d->window_col - 25) / 2;
-
-	start_y = (start_y - 4);
 	
 	
 	attron(COLOR_PAIR(PAIR_TITLE));
