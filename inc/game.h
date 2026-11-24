@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 12:13:04 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/23 01:43:14 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/24 19:08:59 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef enum e_state
 
 enum e_const
 {
-	WIN_VALUE = 2048
+	WIN_VALUE = 32
 };
 
 enum e_pair

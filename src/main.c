@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 11:21:07 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/24 01:07:33 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/24 19:23:05 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,41 @@ static void game_loop(t_data *d)
 		else
 		{
 			move_board(d, key, &d->score);
-			draw_board(d->board, d->start_y, d->start_x);
-			draw_left_menu();
-			draw_score(d);
-			print_2048_fire(d);
+			draw_game_components(d);
 			refresh();
 
 			if (!d->won && has_win(d->board, d->win_value))
 			{   
 				d->won = true;
-				// Burada you win ekranı 
-				// Ve devam etmek için SPACE
-				// Oyunu sonlandırmak için ESC tuşu koyulacak
-
-				// Devam ediyorsa win yazısını silmek için
+				draw_won(d);
+				key = get_key(d, STATE_GAME);
+				while (key != ' ' && key != ESC)
+				{
+					draw_won(d);
+					key = get_key(d, STATE_GAME);
+				}
+				
+				
+				if (key == ESC)
+					break;
 				erase();
-				draw_board(d->board, d->start_y, d->start_x);
+				draw_static_map(d->start_y, d->start_x);
+				draw_game_components(d);
 			}
 
 			if (!has_valid_move(d->board))
 			{
-				// Oyun bittiyse eğer Kaybettiniz yazsın ve
-				// Menu için ESC, Restart için R basma ekranı gelsin
-				mvaddstr(LINES / 2, (COLS - ft_strlen("FINISH")) / 2, "FINISH");
-				// break;
+				draw_lose(d);
+				key = get_key(d, STATE_GAME);
+				while (key != 'R' && key != 'r' && key != ESC)
+				{
+					draw_lose(d);
+					key = get_key(d, STATE_GAME);
+				}
+				if (key == 'r' || key == 'R')
+					reset_board(d);
+				else
+					break;
 			}
 		}	
 	}
@@ -86,10 +97,13 @@ int	main(void)
 
 	draw_movable(d.window_col, "WELCOME 2048 MADE IT BY Mkulbak", 0);
 	draw_menu(&d);
+	flushinp();
 	while (key != ' ' && key != ESC)
 	{
+		key = draw_2048_diagonal(d.window_row, d.window_col);
+		if (key == ' ' || key == ESC)
+			break;
 		key = get_key(&d, STATE_MENU);
-		print_2048_diagonal(d.window_row, d.window_col);
 	}
 
 	while (key != ESC)
@@ -97,12 +111,14 @@ int	main(void)
 		reset_board(&d);
 		game_loop(&d);
 		draw_menu(&d);
-		
+		flushinp();
 		key = get_key(&d, STATE_MENU);
 		while (key != ' ' && key != ESC)
 		{
+			key = draw_2048_diagonal(d.window_row, d.window_col);
+			if (key == ' ' || key == ESC)
+				break;
 			key = get_key(&d, STATE_MENU);
-			print_2048_diagonal(d.window_row, d.window_col);
 		}
 	}
 	endwin();

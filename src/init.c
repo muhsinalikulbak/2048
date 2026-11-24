@@ -27,7 +27,6 @@ void	update_size(t_data *d)
 static void	init_screen(void)
 {
 	initscr();
-	flushinp(); // Bu neden çalışmıyor.
 	curs_set(0); // terminal küçükken burada kod patlıyor neden anlamadım buraya bak
 	noecho();
 	nodelay(stdscr, TRUE);
@@ -97,6 +96,8 @@ int     get_key(t_data *d, state draw_state)
 
 	if (key == KEY_RESIZE)
 	{
+		timeout(20);
+		key = getch();
 		update_size(d);
 		if (draw_state == STATE_MENU)
 			draw_menu(d);
@@ -107,7 +108,7 @@ int     get_key(t_data *d, state draw_state)
 			draw_board(d->board, d->start_y, d->start_x);
 			draw_left_menu();
 			draw_score(d);
-			print_2048_fire(d);
+			draw_2048_fire(d);
 		}
 	}
 	return key;

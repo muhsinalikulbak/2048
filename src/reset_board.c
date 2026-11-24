@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 01:51:34 by muhsin            #+#    #+#             */
-/*   Updated: 2026/11/24 01:11:00 by muhsin           ###   ########.fr       */
+/*   Updated: 2026/11/24 19:12:47 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ void	reset_board(t_data *d)
 	draw_static_map(d->start_y, d->start_x);
 	
 	d->score = 0;
+	d->won = false;
 	spawn_tile(d);
 	spawn_tile(d);
 	draw_left_menu();
-	print_2048_fire(d);
+	draw_2048_fire(d);
 	draw_score(d);
 	draw_board(d->board, d->start_y, d->start_x);
 

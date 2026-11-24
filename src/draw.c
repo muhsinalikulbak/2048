@@ -3,7 +3,7 @@
 #include "reset_board.h"
 #include "init.h"
 
-void	print_2048_fire(t_data *d)
+void	draw_2048_fire(t_data *d)
 {
 	static const char	*lines[] = {
 		"    )    )      )  (      ",
@@ -30,8 +30,10 @@ void	print_2048_fire(t_data *d)
 	refresh();
 }
 
-void	print_2048_diagonal(int window_row, int window_col)
+int	draw_2048_diagonal(int window_row, int window_col)
 {
+	int key = 0;
+
 	static const char	*lines[] = {
 		"                                          ,---.-,",
 		"                                   ,--,  '   ,'  '.",
@@ -58,6 +60,9 @@ void	print_2048_diagonal(int window_row, int window_col)
 	attron(A_BOLD);
 	for (int i = 0; i < 16; i++)
 	{
+		key = getch();
+		if (key == ' ' || key == ESC)
+			return key;
 		mvaddstr(start_y + i, start_x, lines[i]);
 		refresh();
 	}
@@ -66,6 +71,10 @@ void	print_2048_diagonal(int window_row, int window_col)
 
 	for (int i = 0; i < 16; i++)
 	{
+		key = getch();
+		if (key == ' ' || key == ESC)
+			return key;
+			
 		attron(COLOR_PAIR(PAIR_TITLE));
 		attron(A_BOLD);
 		mvaddstr(start_y + i, start_x, lines[i]);
@@ -83,6 +92,7 @@ void	print_2048_diagonal(int window_row, int window_col)
 
 	}
 	refresh();
+	return key;
 }
 
 void	clear_cell_row(int start_y, int start_x, int draw_y, int draw_x)
@@ -235,4 +245,29 @@ void	draw_menu(t_data *d)
 	attroff(COLOR_PAIR(PAIR_TITLE));
 	attroff(A_BOLD);
 	refresh();
+}
+
+void draw_won(t_data *d)
+{
+	static char *won = "You win; press the Space key to continue, or the Esc key to menu.";
+	attron(COLOR_PAIR(PAIR_16));
+	attron(A_BOLD);
+	mvaddstr(d->window_row / 2 - 1, (d->window_col - ft_strlen(won)) / 2, won);
+	refresh();
+}
+void draw_lose(t_data *d)
+{
+	static char *lose = "You lose; press the R key to restart, or the Esc key to menu.";
+	attron(COLOR_PAIR(PAIR_16));
+	attron(A_BOLD);
+	mvaddstr(d->window_row / 2 - 1, (d->window_col - ft_strlen(lose)) / 2, lose);
+	refresh();
+}
+
+void draw_game_components(t_data *d)
+{
+	draw_board(d->board, d->start_y, d->start_x);
+	draw_left_menu();
+	draw_score(d);
+	draw_2048_fire(d);
 }
